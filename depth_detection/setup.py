@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'depth_yolo_pkg'
+package_name = 'depth_detection'
 
 setup(
     name=package_name,
@@ -20,8 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'depth_zed = depth_yolo_pkg.depth_zed:main',
-            'depth_v4l2 = depth_yolo_pkg.depth_v4l2:main'
+            'depth_detector = depth_detection.depth_detector:main',
         ],
     },
 )

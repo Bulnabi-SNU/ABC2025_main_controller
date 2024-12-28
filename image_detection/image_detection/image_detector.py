@@ -47,9 +47,17 @@ class RawImageNode(Node):
 
 
     def select_point(self, event, x, y, flags, param):
+
         if event == cv2.EVENT_LBUTTONDOWN:
+            
             self.selected_point = (x, y)
-            self.get_logger().info(f"Point selected: ({x}, {y})")
+
+            if 0 <= y < self.raw_image.shape[0] and 0 <= x < self.raw_image.shape[1]:
+                rgb_value = self.raw_image[y, x]
+                self.get_logger().info(f"RGB value at ({x}, {y}): {rgb_value}")
+
+            else:
+                self.get_logger().warning("Selected point is out of bounds.")
 
 
     def image_callback(self, msg):
@@ -61,31 +69,21 @@ class RawImageNode(Node):
 
 
     def main_timer_callback(self):
+
         if self.raw_image is not None:
             cv2.imshow("Raw Image", self.raw_image)
-
-            if self.selected_point is not None:
-                
-                x, y = self.selected_point
-
-                if 0 <= y < self.raw_image.shape[0] and 0 <= x < self.raw_image.shape[1]:
-                    rgb_value = self.raw_image[y, x]
-                    self.get_logger().info(f"RGB value at ({x}, {y}): {rgb_value}")
-
-                else:
-                    self.get_logger().warning("Selected point is out of bounds.")
-
+            
             cv2.waitKey(1)
 
 
 
 def main(args=None):
     rclpy.init(args=args)
-    raw_image = RawImageNode()
+    rgb_detection = RawImageNode()
 
-    rclpy.spin(raw_image)
+    rclpy.spin(rgb_detection)
 
-    raw_image.destroy_node()
+    rgb_detection.destroy_node()
     rclpy.shutdown()
 
 

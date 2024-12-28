@@ -12,11 +12,11 @@ import cv2
 from cv_bridge import CvBridge, CvBridgeError
 
 
-class DepthImageNode(Node):
+class RawImageNode(Node):
 
     def __init__(self):
 
-        super().__init__('depth_image_node')
+        super().__init__('depth_detection')
 
         # Initialize Variables
         self.bridge = CvBridge()
@@ -32,10 +32,10 @@ class DepthImageNode(Node):
         )
 
         # Create subcribers
-        self.depth_subscriber = self.create_subscription(
+        self.image_subscriber = self.create_subscription(
             Image,
             '/zed/zed_node/depth/depth_registered',
-            self.depth_callback,
+            self.image_callback,
             qos_profile
         )
 
@@ -47,12 +47,20 @@ class DepthImageNode(Node):
 
 
     def select_point(self, event, x, y, flags, param):
+
         if event == cv2.EVENT_LBUTTONDOWN:
+            
             self.selected_point = (x, y)
-            self.get_logger().info(f"Point selected: ({x}, {y})")
+
+            if 0 <= y < self.depth_image.shape[0] and 0 <= x < self.depth_image.shape[1]:
+                depth_value = self.depth_image[y, x]
+                self.get_logger().info(f"Depth value at ({x}, {y}): {depth_value:.2f} meters")
+
+            else:
+                self.get_logger().warning("Selected point is out of bounds.")
 
 
-    def depth_callback(self, msg):
+    def image_callback(self, msg):
         try:
             self.depth_image = self.bridge.imgmsg_to_cv2(msg, "32FC1")
 
@@ -61,19 +69,9 @@ class DepthImageNode(Node):
 
 
     def main_timer_callback(self):
+
         if self.depth_image is not None:
             cv2.imshow("Depth Image", self.depth_image)
-
-            if self.selected_point is not None:
-
-                x, y = self.selected_point
-
-                if 0 <= y < self.depth_image.shape[0] and 0 <= x < self.depth_image.shape[1]:
-                    depth_value = self.depth_image[y, x]
-                    self.get_logger().info(f"Depth value at ({x}, {y}): {depth_value:.2f} meters")
-
-                else:
-                    self.get_logger().warning("Selected point is out of bounds.")
 
             cv2.waitKey(1)
 
@@ -81,11 +79,11 @@ class DepthImageNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    depth_image = depth_image()
+    depth_detection = RawImageNode()
 
-    rclpy.spin(depth_image)
+    rclpy.spin(depth_detection)
 
-    depth_image.destroy_node()
+    depth_detection.destroy_node()
     rclpy.shutdown()
 
 
