@@ -43,8 +43,16 @@ class YOLO_depth(Node):
         # Create subcribers
         self.image_subscriber = self.create_subscription(
             Image,
-            '/zed/zed_node/depth/depth_registered',
+            '/zed/zed_node/rgb_raw/image_rect_color',
             self.image_callback,
+            qos_profile
+        )
+        
+
+        self.depth_subscriber = self.create_subscription(
+            Image,
+            '/zed/zed_node/depth/depth_registered',
+            self.depth_callback,
             qos_profile
         )
         
@@ -74,6 +82,15 @@ class YOLO_depth(Node):
 
     # Callback functions for timers
     def image_callback(self, msg):
+        try:
+            image = CvBridge().imgmsg_to_cv2(msg, "rgb8")
+            self.raw_image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
+        except CvBridgeError as e:
+            self.get_logger().error(f"Failed to convert image: {e}")
+
+
+    def depth_callback(self, msg):
         try:
             self.depth_image = self.bridge.imgmsg_to_cv2(msg, "32FC1")
 
