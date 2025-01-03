@@ -19,7 +19,6 @@ class RawImageNode(Node):
         super().__init__('image_detection')
 
         # Initialize Variables
-        self.bridge = CvBridge()
         self.raw_image = None
         self.selected_point = None
 
@@ -62,7 +61,8 @@ class RawImageNode(Node):
 
     def image_callback(self, msg):
         try:
-            self.raw_image = self.bridge.imgmsg_to_cv2(msg, "rgb8")
+            image = CvBridge().imgmsg_to_cv2(msg, "rgb8")
+            self.raw_image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
         except CvBridgeError as e:
             self.get_logger().error(f"Failed to convert image: {e}")
@@ -72,7 +72,6 @@ class RawImageNode(Node):
 
         if self.raw_image is not None:
             cv2.imshow("Raw Image", self.raw_image)
-            
             cv2.waitKey(1)
 
 
@@ -85,10 +84,3 @@ def main(args=None):
 
     rgb_detection.destroy_node()
     rclpy.shutdown()
-
-
-if __name__ == '__main__':
-    try:
-        main()
-    except Exception as e:
-        print(e)
