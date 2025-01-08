@@ -9,7 +9,6 @@ from cv_bridge import CvBridge, CvBridgeError
 import torch
 import yaml
 import numpy as np
-# edit
 
 # import required msgs
 from sensor_msgs.msg import Image
@@ -31,6 +30,7 @@ class YOLO_depth(Node):
         # Initialize Variables
         self.previous_bboxes = torch.tensor([[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]])
         self.raw_image = None
+        self.depth_image = None
 
         # Define QoS profile
         qos_profile = QoSProfile(
@@ -48,7 +48,6 @@ class YOLO_depth(Node):
             qos_profile
         )
         
-
         self.depth_subscriber = self.create_subscription(
             Image,
             '/zed/zed_node/depth/depth_registered',
@@ -92,34 +91,38 @@ class YOLO_depth(Node):
 
     def depth_callback(self, msg):
         try:
-            self.depth_image = self.bridge.imgmsg_to_cv2(msg, "32FC1")
+            self.depth_image = CvBridge().imgmsg_to_cv2(msg, "32FC1")
 
         except CvBridgeError as e:
             self.get_logger().error(f"Failed to convert image: {e}")
 
 
 
-    def main_timer_callback(self, msg):
-
-        if self.depth_image is not None:
-
+    def main_timer_callback(self):
+        if self.depth_image is not None and self.raw_image is not None:
             results = self.model(self.raw_image)
             original_image = results[0].orig_img
             bboxes = results[0].boxes.data
-            coor = bboxes.item(0).tolist()
-            x_min, x_max, y_min, y_max = coor[0], coor[1], coor[2], coor[3]
-            depth_values = self.depth_image[y_min:y_max, x_min:x_max]
-            valid_depths = depth_values[np.isfinite(depth_values)]
-            depth_value = np.mean(valid_depths)
-            print(f"estimated depth value: {depth_value:2f}")
 
-            cv2.imshow("Depth Image", self.depth_image)
+            # Iterate over each bounding box
+            for bbox in bboxes:
+                x_min, y_min, x_max, y_max, confidence, class_index = bbox.tolist()
+                x_min, x_max, y_min, y_max = int(x_min), int(x_max), int(y_min), int(y_max)
+
+                # Extract depth values for the bounding box
+                depth_values = self.depth_image[y_min:y_max, x_min:x_max]
+                valid_depths = depth_values[np.isfinite(depth_values)]
+                depth_value = np.mean(valid_depths) if valid_depths.size > 0 else float('nan')
+
+                print(f"Estimated depth value: {depth_value:.2f}")
+
+            # Draw bounding boxes and display images
             self.draw_bboxes(results=results, bboxes=bboxes)
-
+            cv2.imshow("Depth Image", self.depth_image)
+            cv2.imshow("Detection Results", original_image)
             cv2.waitKey(1)
-
-        else :
-            print("self.image is None")
+        else:
+            print("Depth or raw image is None")
 
 
 
