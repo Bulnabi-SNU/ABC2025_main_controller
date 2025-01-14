@@ -1,0 +1,6 @@
+vehicle_controller: # Name of node
+  ros__parameters: # ROS parameters
+    WP1: [2.0, 0.0, -5.0]
+    WP2: [2.0, 2.0, -5.0]
+    WP3: [0.0, 2.0, -5.0]
+    WP4: [0.0, 0.0, -5.0]
