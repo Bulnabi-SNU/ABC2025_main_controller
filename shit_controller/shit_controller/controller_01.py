@@ -17,6 +17,7 @@ from px4_msgs.msg import OffboardControlMode
 from px4_msgs.msg import TrajectorySetpoint
 
 # import message for YOLOv5
+# from my_msgs import ~
 
 # import other libraries
 import os

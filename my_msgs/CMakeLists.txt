@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(my_bboxes_msg)
+project(my_msgs)
 
 
 #custom

@@ -8,7 +8,7 @@
   <license>TODO: License declaration</license>
 
   <depend>px4_msgs</depend>
-  <depend>my_bboxes_msg</depend>
+  <depend>my_msgs</depend>
 
   <exec_depend>ros2launch</exec_depend>
 
