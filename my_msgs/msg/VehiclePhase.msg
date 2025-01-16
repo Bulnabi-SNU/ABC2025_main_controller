@@ -1,2 +1,0 @@
-string phase
-string subphase
