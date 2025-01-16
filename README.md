@@ -1,2 +1,7 @@
-***AFSC2025_main_controller***
-Main flight controller for Active Floating Substance Contol project 2025
+# ABC2025_main_controller
+
+ROS2 nodes for Active Balloon Contol project 2025
+
+
+# Installation
+
