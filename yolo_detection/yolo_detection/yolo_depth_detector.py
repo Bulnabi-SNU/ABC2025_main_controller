@@ -4,6 +4,7 @@ from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 
 from ultralytics import YOLO
+from roboflow import Roboflow
 import open3d as o3d
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
@@ -22,10 +23,8 @@ class YOLO_depth(Node):
 
     def __init__(self):
         super().__init__('YOLO_depth_detection')
-
+        
         # Declare Parameters
-        self.model = YOLO("yolo11n.pt")
-  
         self.declare_parameter(name='names', value=None)
         self.labels = self.get_parameter(name='names').value
         print(self.labels)
@@ -61,6 +60,11 @@ class YOLO_depth(Node):
             [0, self.fy, self.cy],
             [0,  0,  1]]
 
+        # Initialize object detection model
+        rf = Roboflow(api_key="xtqdVslfhTMsizbzOtVG")
+        project = rf.workspace().project("trash_balloon_detection-0vwqh")
+        self.model = project.version('1').model
+        #self.model = YOLO("yolo11n.pt")    
 
         # Define QoS profile
         qos_profile = QoSProfile(
@@ -95,9 +99,10 @@ class YOLO_depth(Node):
         # Timer setup
         self.main_timer = self.create_timer(0.2, self.main_timer_callback)
 
+
     # services
     def draw_bboxes(self, results, bboxes):
-
+        # draw bounding boxes on rgb image
         color = (0, 255, 0)
         thickness = 3
         original_image = results[0].orig_img
@@ -138,7 +143,7 @@ class YOLO_depth(Node):
             # rgb image -> OpenCV image
             image = CvBridge().imgmsg_to_cv2(msg, "rgb8")
             self.raw_image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-            self.width, self.depth = self.raw_image.size()
+            self.height, self.width = self.raw_image.shape[:2]
 
         except CvBridgeError as e:
             self.get_logger().error(f"Failed to convert image: {e}")
@@ -205,14 +210,20 @@ class YOLO_depth(Node):
                 
                 bboxes_pcd.append(point_3d)
                 print(f"3d points for bounding box: {point_list}")
-
+            
 
             # Draw bounding boxes and display images
             cv2.imshow("Detection Results", original_image)
             self.draw_bboxes(results=results, bboxes=bboxes)
 
             cv2.waitKey(1)
-            
+
+            # Visualize 3d pointcloud
+            o3d.visualization.draw_geometries([self.pcd],
+                                  zoom=0.3412,
+                                  front=[0.4257, -0.2125, -0.8795],
+                                  lookat=[2.6172, 2.0475, 1.532],
+                                  up=[-0.0694, -0.9768, 0.2024])
 
         else:
             print("Image is None")
@@ -227,8 +238,3 @@ def main(args=None):
 
     ros2_node.destroy_node()
     rclpy.shutdown()
-
-
-# Code Explanation
-# main_timer_callback: calculate and print mean estimated values of an object
-# map the estimated pixels into a pointcloud
