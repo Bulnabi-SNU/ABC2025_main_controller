@@ -20,7 +20,7 @@ class YOLO_RGB(Node):
         super().__init__('YOLO_rgb_detection')
 
         # Declare Parameters
-        self.model = YOLO("yolo11n.pt")
+        self.model = YOLO("yolo8n.pt")
   
         self.declare_parameter(name='names', value=None)
         self.labels = self.get_parameter(name='names').value

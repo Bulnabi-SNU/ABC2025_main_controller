@@ -61,10 +61,13 @@ class YOLO_depth(Node):
             [0,  0,  1]]
 
         # Initialize object detection model
+        '''
         rf = Roboflow(api_key="xtqdVslfhTMsizbzOtVG")
         project = rf.workspace().project("trash_balloon_detection-0vwqh")
         self.model = project.version('1').model
-        #self.model = YOLO("yolo11n.pt")    
+        '''
+        path_to_pt = '/home/kimgracy/YOLO/YOLOv8/Trash_Balloon_Detection-1/runs/detect/train4/weights/best.pt'
+        self.model = YOLO(path_to_pt)
 
         # Define QoS profile
         qos_profile = QoSProfile(
