@@ -3,10 +3,8 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 
-# import required modules
+# import required libraries
 from ultralytics import YOLO
-from roboflow import Roboflow
-import open3d as o3d
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
 import pyzed.sl as sl # Can be imported only if ZED SDK is installed (unavailable in local)
@@ -26,11 +24,6 @@ class YOLO_depth(Node):
     def __init__(self):
         super().__init__('YOLO_depth_detection')
         
-        # Declare Parameters
-        self.declare_parameter(name='names', value=None)
-        self.labels = self.get_parameter(name='names').value
-        print(self.labels)
-        
         # Initialize Variables
         self.previous_bboxes = torch.tensor([[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]])
         self.raw_image = None
@@ -41,6 +34,7 @@ class YOLO_depth(Node):
         self.init_params = sl.InitParameters()
         self.init_params.camera_resolution = sl.RESOLUTION.HD720
         self.init_params.coordinate_units = sl.UNIT.METER
+        self.init_params.depth_mode = sl.DEPTH_MODE.PERFORMANCE 
 
         if self.zed.open(self.init_params) != sl.ERROR_CODE.SUCCESS:
             self.get_logger().error("Failed to initialize ZED camera")
@@ -51,8 +45,8 @@ class YOLO_depth(Node):
         calibration_params = camera_info.calibration_parameters
 
         # intrinsic mtx of left camera
+        # for pixel_to_3d function
         left_cam_matrix = calibration_params.left_cam
-        
         self.fx = left_cam_matrix.fx
         self.fy = left_cam_matrix.fy
         self.cx = left_cam_matrix.cx
@@ -103,6 +97,7 @@ class YOLO_depth(Node):
 
         # Create publishers
         self.yolo_publisher = self.create_publisher(YoloDetection, '/yolo_detection', qos_profile)
+
         self.depth_activation_publisher = self.create_publisher(DepthActivated, '/depth_activated', qos_profile)
 
         # Timer setup
@@ -110,26 +105,33 @@ class YOLO_depth(Node):
 
 
     # services
-    def draw_bboxes(self, results, bboxes):
-        # draw bounding boxes on rgb image
+    def draw_bboxes(self, bboxes):
+        # Draw bounding boxes on RGB image
         color = (0, 255, 0)
         thickness = 3
-        original_image = results[0].orig_img
 
         for row in bboxes :
             x_min, y_min, x_max, y_max, confidence, class_index = row.tolist()
-            label = f"{results[0].names[class_index]}: {confidence:.2f}"
+
+            # Ensure coordinates are valid integers
+            x_min, y_min, x_max, y_max = map(int, [x_min, y_min, x_max, y_max])
+
+            label = 'balloon'
             font = cv2.FONT_HERSHEY_SIMPLEX
             font_scale = 0.5
             font_thickness = 1
             text_size = cv2.getTextSize(label, font, font_scale, font_thickness)[0]
             text_x, text_y = int(x_min), int(y_min) - 10  # Position above the box
-            text_bg_color = (0, 255, 0)  # Same as rectangle color
-            cv2.rectangle(original_image, (text_x, text_y - text_size[1]), (text_x + text_size[0], text_y), text_bg_color, -1)
-            cv2.putText(original_image, label, (text_x, text_y), font, font_scale, (0, 0, 0), font_thickness)
+            text_color = (0, 255, 0)  # Same as rectangle color
 
+            # Draw bounding box
+            cv2.rectangle(self.raw_image, (x_min, y_min), (x_max, y_max), color, thickness)
+            # Draw text box
+            cv2.rectangle(self.raw_image, (text_x, text_y - text_size[1]), (text_x + text_size[0], text_y), text_color, -1)
+            cv2.putText(self.raw_image, label, (text_x, text_y), font, font_scale, (0, 0, 0), font_thickness)
 
-    def pixel_to_pcd(self, pixel) :
+    '''
+    def pixel_to_3d(self, pixel) :
         # convert pixel to 3d points
         u, v = pixel
         Z = self.depth_image[v, u]
@@ -144,9 +146,9 @@ class YOLO_depth(Node):
             Y = Z * (v - self.cy) / self.fy
 
         return (X,Y,Z)
+    '''
 
-
-    # Callback functions for timers
+    # Callback functions for subscribers
     def image_callback(self, msg):
         try:
             # rgb image -> OpenCV image
@@ -166,7 +168,8 @@ class YOLO_depth(Node):
         except CvBridgeError as e:
             self.get_logger().error(f"Failed to convert image: {e}")
 
-
+    # pointcloud callback function - Unused
+    '''
     def pcd_callback(self, msg):
         try:
             # ROS PointCloud2 -> Open3D PointCloud
@@ -180,11 +183,11 @@ class YOLO_depth(Node):
 
         except Exception as e:
             self.get_logger().error(f"Failed to convert PointCloud: {e}")
-
+    '''
 
     def main_timer_callback(self):
-        # Show bounding boxes at OpenCV window
         # print mean estimated value of a box
+        # Show bounding boxes at OpenCV window
         # Publish YoloDetection & DepthActivated
         if self.depth_image is not None and self.raw_image is not None:
 
@@ -192,17 +195,23 @@ class YOLO_depth(Node):
             original_image = results[0].orig_img
             bboxes = results[0].boxes.data
 
-            # 1. Show bounding boxes in OpenCV window
-            # 2. Convert bounding box pixels to 3d points
-            bboxes_pcd = []
+            # publish DepthActivated msg
+            depth_activated_msg = DepthActivated()
+
+            if bboxes.size(0) == 0 :
+                depth_activated_msg.depth_activated = False
+            elif bboxes.size(0) != 0 :
+                depth_activated_msg.depth_activated = True
+            
+            self.depth_activation_publisher.publish(depth_activated_msg)
+
 
             for bbox in bboxes:
                 x_min, y_min, x_max, y_max, confidence, class_index = bbox.tolist()
                 x_min, x_max, y_min, y_max = int(x_min), int(x_max), int(y_min), int(y_max)
                 pixel_list = [(x_min, y_min), (x_min, y_max), (x_max, y_min), (x_max, y_max)]
-
                 
-
+                # print mean estimated depth value
                 depth_values = self.depth_image[y_min:y_max, x_min:x_max]
                 valid_depths = depth_values[np.isfinite(depth_values)]
 
@@ -211,22 +220,35 @@ class YOLO_depth(Node):
                 else :
                     depth_value = float('nan')
 
-                class_name = f"{results[0].names[class_index]}"
+                class_name = "ladder"
                 print(f"Estimated depth value of {class_name}: {depth_value:.2f}")
+
+                # publish YoloDetection msg
+                yolo_detection_msg = YoloDetection()
+                yolo_detection_msg.label = class_name
+                yolo_detection_msg.screen_width = float(640)
+                yolo_detection_msg.screen_height = float(480)
+                yolo_detection_msg.xmax = float(x_max)
+                yolo_detection_msg.ymax = float(y_max)
+                yolo_detection_msg.xmin = float(x_min)
+                yolo_detection_msg.ymin = float(y_min)
+
+                self.yolo_publisher.publish(yolo_detection_msg)
+
                 
+                # pixel to 3d coordinates
                 point_list = []
 
                 for pixel in pixel_list :
-                    point_3d = self.pixel_to_pcd(pixel=pixel)
+                    point_3d = self.pixel_to_3d(pixel=pixel)
                     point_list.append(point_3d)
                 
-                bboxes_pcd.append(point_3d)
                 print(f"3d points for bounding box: {point_list}")
-            
 
-            # Draw bounding boxes and display images
-            cv2.imshow("Detection Results", original_image)
+
+            # Draw bounding boxes and display images at OpenCV window
             self.draw_bboxes(results=results, bboxes=bboxes)
+            cv2.imshow("Detection Results", original_image)
 
             cv2.waitKey(1)
 

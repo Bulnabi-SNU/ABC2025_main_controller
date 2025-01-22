@@ -15,6 +15,7 @@ find_package(sensor_msgs REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/YoloDetection.msg"
   "msg/DepthActivated.msg"
+  "msg/VehicleState.msg"
   DEPENDENCIES std_msgs sensor_msgs
  )
 

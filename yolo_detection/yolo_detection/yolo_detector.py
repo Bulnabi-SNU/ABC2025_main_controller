@@ -60,9 +60,6 @@ class YOLO_RGB(Node):
             # Ensure coordinates are valid integers
             x_min, y_min, x_max, y_max = map(int, [x_min, y_min, x_max, y_max])
 
-            # Debugging: check if the bounding box coordinates are within the image bounds
-            print(f"Drawing box: {(x_min, y_min)} to {(x_max, y_max)}")
-
             label = 'balloon'
             font = cv2.FONT_HERSHEY_SIMPLEX
             font_scale = 0.5

@@ -24,6 +24,8 @@ setup(
     entry_points={
         'console_scripts': [
             'control01 = shit_controller.controller_01:main',
+            'test01 = shit_controller.test_01:main',
+            'obstacle_speaker = shit_controller.obstacle_speaker:main'
         ],
     },
 )
