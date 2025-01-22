@@ -1,0 +1,11 @@
+vehicle_controller: # Name of node
+  ros__parameters: # ROS parameters
+    logging: False
+    num_WP: 6
+    # WP: [latitude, longitude, relative altitude]
+    gps_WP1: [37.2463533, 126.6670817, 60.0]
+    gps_WP2: [37.24635327854423, 126.66933588962254, 60.0]
+    gps_WP3: [37.24791390699983, 126.67046305416154, 60.0]
+    gps_WP4: [37.24947458868321, 126.66933598259769, 45.0]
+    gps_WP5: [37.24947461014141, 126.6670817, 60.0]
+    gps_WP6: [37.24791394991379, 126.66595458194499, 60.0]

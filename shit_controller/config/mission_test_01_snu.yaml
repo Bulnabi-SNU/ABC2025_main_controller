@@ -1,0 +1,13 @@
+vehicle_controller: # Name of node
+  ros__parameters: # ROS parameters
+    logging: True
+    num_WP: 7
+    # WP: [latitude, longitude, relative altitude]
+    # just use WP7 in SNU home -> takeoff -> WP7, offboard -> home
+    gps_WP1: [36.661078, 126.342193, 50.0]
+    gps_WP2: [36.662081, 126.344977, 50.0]
+    gps_WP3: [36.663238, 126.341070, 50.0]
+    gps_WP4: [36.661950, 126.341837, 10.0]
+    gps_WP5: [36.660259, 126.342790, 10.0]
+    gps_WP6: [36.659412, 126.344157, 30.0]
+    gps_WP7: [37.464743, 126.950034, 5.0]
