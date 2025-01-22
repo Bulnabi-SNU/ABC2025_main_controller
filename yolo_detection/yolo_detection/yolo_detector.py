@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 
+# import required modules
 from ultralytics import YOLO
 import cv2
 from cv_bridge import CvBridge, CvBridgeError
@@ -20,11 +21,8 @@ class YOLO_RGB(Node):
         super().__init__('YOLO_rgb_detection')
 
         # Declare Parameters
-        self.model = YOLO("yolo8n.pt")
-  
-        self.declare_parameter(name='names', value=None)
-        self.labels = self.get_parameter(name='names').value
-        print(self.labels)
+        path_to_pt = '/home/kimgracy/YOLO/YOLOv8/Trash_Balloon_Detection-1/runs/detect/train4/weights/best.pt'
+        self.model = YOLO(path_to_pt)
         
         # Initialize Variables
         self.previous_bboxes = torch.tensor([[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]])
@@ -49,24 +47,35 @@ class YOLO_RGB(Node):
         # Timer setup
         self.main_timer = self.create_timer(0.2, self.main_timer_callback)
 
+
     # services
-    def draw_bboxes(self, results, bboxes):
+    def draw_bboxes(self, bboxes):
 
         color = (0, 255, 0)
         thickness = 3
-        original_image = results[0].orig_img
 
         for row in bboxes :
             x_min, y_min, x_max, y_max, confidence, class_index = row.tolist()
-            label = f"{results[0].names[class_index]}: {confidence:.2f}"
+
+            # Ensure coordinates are valid integers
+            x_min, y_min, x_max, y_max = map(int, [x_min, y_min, x_max, y_max])
+
+            # Debugging: check if the bounding box coordinates are within the image bounds
+            print(f"Drawing box: {(x_min, y_min)} to {(x_max, y_max)}")
+
+            label = 'balloon'
             font = cv2.FONT_HERSHEY_SIMPLEX
             font_scale = 0.5
             font_thickness = 1
             text_size = cv2.getTextSize(label, font, font_scale, font_thickness)[0]
             text_x, text_y = int(x_min), int(y_min) - 10  # Position above the box
-            text_bg_color = (0, 255, 0)  # Same as rectangle color
-            cv2.rectangle(original_image, (text_x, text_y - text_size[1]), (text_x + text_size[0], text_y), text_bg_color, -1)
-            cv2.putText(original_image, label, (text_x, text_y), font, font_scale, (0, 0, 0), font_thickness)
+            text_color = (0, 255, 0)  # Same as rectangle color
+
+            # Draw bounding box
+            cv2.rectangle(self.raw_image, (x_min, y_min), (x_max, y_max), color, thickness)
+            # Draw text box
+            cv2.rectangle(self.raw_image, (text_x, text_y - text_size[1]), (text_x + text_size[0], text_y), text_color, -1)
+            cv2.putText(self.raw_image, label, (text_x, text_y), font, font_scale, (0, 0, 0), font_thickness)
 
 
 
@@ -85,11 +94,12 @@ class YOLO_RGB(Node):
         if self.raw_image is not None:
 
             results = self.model(self.raw_image)
-            original_image = results[0].orig_img
             bboxes = results[0].boxes.data
             
-            cv2.imshow("Object Detection", original_image)
-            self.draw_bboxes(results=results, bboxes=bboxes)
+            print(f"bboxes: \n{bboxes}")
+
+            self.draw_bboxes(bboxes=bboxes)
+            cv2.imshow("Object Detection", self.raw_image)
 
             cv2.waitKey(1)
 

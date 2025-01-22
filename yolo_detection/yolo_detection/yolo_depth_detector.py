@@ -3,6 +3,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 
+# import required modules
 from ultralytics import YOLO
 from roboflow import Roboflow
 import open3d as o3d
@@ -17,6 +18,7 @@ import numpy as np
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import PointCloud2
 import sensor_msgs.msg._point_cloud2 as pc2
+from my_msgs.msg import YoloDetection, DepthActivated
 
 
 class YOLO_depth(Node):
@@ -99,6 +101,10 @@ class YOLO_depth(Node):
             qos_profile
         )
 
+        # Create publishers
+        self.yolo_publisher = self.create_publisher(YoloDetection, '/yolo_detection', qos_profile)
+        self.depth_activation_publisher = self.create_publisher(DepthActivated, '/depth_activated', qos_profile)
+
         # Timer setup
         self.main_timer = self.create_timer(0.2, self.main_timer_callback)
 
@@ -179,6 +185,7 @@ class YOLO_depth(Node):
     def main_timer_callback(self):
         # Show bounding boxes at OpenCV window
         # print mean estimated value of a box
+        # Publish YoloDetection & DepthActivated
         if self.depth_image is not None and self.raw_image is not None:
 
             results = self.model(self.raw_image)
@@ -193,6 +200,8 @@ class YOLO_depth(Node):
                 x_min, y_min, x_max, y_max, confidence, class_index = bbox.tolist()
                 x_min, x_max, y_min, y_max = int(x_min), int(x_max), int(y_min), int(y_max)
                 pixel_list = [(x_min, y_min), (x_min, y_max), (x_max, y_min), (x_max, y_max)]
+
+                
 
                 depth_values = self.depth_image[y_min:y_max, x_min:x_max]
                 valid_depths = depth_values[np.isfinite(depth_values)]
@@ -221,12 +230,14 @@ class YOLO_depth(Node):
 
             cv2.waitKey(1)
 
+            '''
             # Visualize 3d pointcloud
             o3d.visualization.draw_geometries([self.pcd],
                                   zoom=0.3412,
                                   front=[0.4257, -0.2125, -0.8795],
                                   lookat=[2.6172, 2.0475, 1.532],
                                   up=[-0.0694, -0.9768, 0.2024])
+            '''
 
         else:
             print("Image is None")
