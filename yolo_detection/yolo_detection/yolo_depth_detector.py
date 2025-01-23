@@ -62,7 +62,7 @@ class YOLO_depth(Node):
         project = rf.workspace().project("trash_balloon_detection-0vwqh")
         self.model = project.version('1').model
         '''
-        path_to_pt = '/home/kimgracy/YOLO/YOLOv8/Trash_Balloon_Detection-1/runs/detect/train4/weights/best.pt'
+        path_to_pt = './best.pt'
         self.model = YOLO(path_to_pt)
 
         # Define QoS profile
