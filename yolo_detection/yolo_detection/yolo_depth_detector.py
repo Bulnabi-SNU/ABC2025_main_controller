@@ -29,32 +29,22 @@ class YOLO_depth(Node):
         self.raw_image = None
         self.depth_image = None
 
-        # Initialize and open ZED camera
-        self.zed = sl.Camera()
-        self.init_params = sl.InitParameters()
-        self.init_params.camera_resolution = sl.RESOLUTION.HD720
-        self.init_params.coordinate_units = sl.UNIT.METER
-        self.init_params.depth_mode = sl.DEPTH_MODE.PERFORMANCE 
-
-        if self.zed.open(self.init_params) != sl.ERROR_CODE.SUCCESS:
-            self.get_logger().error("Failed to initialize ZED camera")
-            exit()
-
-        # Initialize ZED camera info
-        camera_info = self.zed.get_camera_information()
-        calibration_params = camera_info.calibration_parameters
-
+        # Initialize camera info
         # intrinsic mtx of left camera
-        # for pixel_to_3d function
-        left_cam_matrix = calibration_params.left_cam
-        self.fx = left_cam_matrix.fx
-        self.fy = left_cam_matrix.fy
-        self.cx = left_cam_matrix.cx
-        self.cy = left_cam_matrix.cy
+        path_to_calibration_file = './src/camera_calibration/zed_calibration_formatted.yaml'
 
-        self.K = [[self.fx, 0, self.cx],
-            [0, self.fy, self.cy],
-            [0,  0,  1]]
+        with open(path_to_calibration_file, 'r') as file:
+            try:
+                calibration_data = yaml.safe_load(file)
+
+            except yaml.YAMLError as e:
+                print(f"Error loading YAML file: {e}")
+
+        self.K = calibration_data['k']
+        self.fx = self.K[0][0]
+        self.fy = self.K[1][1]
+        self.cx = self.K[0][2]
+        self.cy = self.K[1][2]
 
         # Initialize object detection model
         '''
@@ -62,7 +52,7 @@ class YOLO_depth(Node):
         project = rf.workspace().project("trash_balloon_detection-0vwqh")
         self.model = project.version('1').model
         '''
-        path_to_pt = './best.pt'
+        path_to_pt = './src/yolo_detection/yolo_detection/best.pt'
         self.model = YOLO(path_to_pt)
 
         # Define QoS profile
@@ -76,7 +66,7 @@ class YOLO_depth(Node):
         # Create subcribers
         self.image_subscriber = self.create_subscription(
             Image,
-            '/zed/zed_node/rgb_raw/image_rect_color',
+            '/zed/zed_node/rgb_raw/image_raw_color',
             self.image_callback,
             qos_profile
         )
@@ -87,17 +77,17 @@ class YOLO_depth(Node):
             self.depth_callback,
             qos_profile
         )
-        
+        '''
         self.pcd_subscriber = self.create_subscription(
             Image,
             '/zed/zed_node/point_cloud/cloud_registered',
             self.pcd_callback,
             qos_profile
         )
+        '''
 
         # Create publishers
         self.yolo_publisher = self.create_publisher(YoloDetection, '/yolo_detection', qos_profile)
-
         self.depth_activation_publisher = self.create_publisher(DepthActivated, '/depth_activated', qos_profile)
 
         # Timer setup
@@ -130,7 +120,7 @@ class YOLO_depth(Node):
             cv2.rectangle(self.raw_image, (text_x, text_y - text_size[1]), (text_x + text_size[0], text_y), text_color, -1)
             cv2.putText(self.raw_image, label, (text_x, text_y), font, font_scale, (0, 0, 0), font_thickness)
 
-    '''
+
     def pixel_to_3d(self, pixel) :
         # convert pixel to 3d points
         u, v = pixel
@@ -146,7 +136,7 @@ class YOLO_depth(Node):
             Y = Z * (v - self.cy) / self.fy
 
         return (X,Y,Z)
-    '''
+
 
     # Callback functions for subscribers
     def image_callback(self, msg):
@@ -200,7 +190,7 @@ class YOLO_depth(Node):
 
             if bboxes.size(0) == 0 :
                 depth_activated_msg.depth_activated = False
-            elif bboxes.size(0) != 0 :
+            elif bboxes.size(0) > 0 :
                 depth_activated_msg.depth_activated = True
             
             self.depth_activation_publisher.publish(depth_activated_msg)
@@ -220,14 +210,14 @@ class YOLO_depth(Node):
                 else :
                     depth_value = float('nan')
 
-                class_name = "ladder"
+                class_name = "balloon"
                 print(f"Estimated depth value of {class_name}: {depth_value:.2f}")
 
                 # publish YoloDetection msg
                 yolo_detection_msg = YoloDetection()
                 yolo_detection_msg.label = class_name
                 yolo_detection_msg.screen_width = float(640)
-                yolo_detection_msg.screen_height = float(480)
+                yolo_detection_msg.screen_height = float(360)
                 yolo_detection_msg.xmax = float(x_max)
                 yolo_detection_msg.ymax = float(y_max)
                 yolo_detection_msg.xmin = float(x_min)
@@ -247,7 +237,7 @@ class YOLO_depth(Node):
 
 
             # Draw bounding boxes and display images at OpenCV window
-            self.draw_bboxes(results=results, bboxes=bboxes)
+            self.draw_bboxes(bboxes=bboxes)
             cv2.imshow("Detection Results", original_image)
 
             cv2.waitKey(1)
@@ -262,7 +252,10 @@ class YOLO_depth(Node):
             '''
 
         else:
-            print("Image is None")
+            print("------------")
+            print(f"raw image: {self.raw_image}")
+            print(f"depth image: {self.depth_image}")
+            
 
 
 
