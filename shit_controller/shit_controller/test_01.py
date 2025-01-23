@@ -177,6 +177,7 @@ class VehicleController(Node):
         """
         self.offboard_heartbeat = self.create_timer(self.time_period, self.offboard_heartbeat_callback)
         self.main_timer = self.create_timer(self.time_period, self.main_timer_callback)
+        self.vehicle_state_timer = self.create_timer(self.time_period, self.vehicle_state_callback)
     
 
     """
@@ -259,6 +260,12 @@ class VehicleController(Node):
     def offboard_heartbeat_callback(self):
         """offboard heartbeat signal"""
         self.publish_offboard_control_mode(position=True)
+    
+    def vehicle_state_callback(self):
+        msg = VehicleState()
+        msg.state = self.state
+        msg.substate = self.substate
+        self.vehicle_state_publisher.publish(msg)
 
     def main_timer_callback(self):
         if self.state == 'ready2flight':
