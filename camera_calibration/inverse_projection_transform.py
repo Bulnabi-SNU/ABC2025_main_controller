@@ -36,7 +36,7 @@ def load_camera_info(camera_info, yaml_file):
 
 # Example usage
 def main():
-    yaml_file = 'zed_calibration.yaml'  # Path to the YAML file
+    yaml_file = 'src/camera_calibration/zed_calibration.yaml'  # Path to the YAML file
     camera_info = '/zed/zed_node/left_raw/camera_info'
 
     try:

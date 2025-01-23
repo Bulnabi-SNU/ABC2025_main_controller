@@ -236,10 +236,8 @@ class VehicleController(Node):
                 yaw_sp = self.yaw + np.sign(np.sin(goal_yaw - self.yaw)) * self.yaw_speed
             )
 
-    def run_turning_yaw(self, yaw_speed):
-        self.publish_trajectory_setpoint(
-                yaw_sp = self.yaw + yaw_speed
-            )
+    def turning_yaw(self, yaw_speed):
+        return self.yaw + yaw_speed
     
     def get_braking_position(self, pos, vel):
         braking_distance = (np.linalg.norm(vel))**2 / (2 * self.max_acceleration)
@@ -283,7 +281,7 @@ class VehicleController(Node):
                         param2=6.0  # offboard
                     )
                 elif self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD:
-                    self.goal_position = np.array([0.0, 0.0, 25.0]) # rising altitude to 25m
+                    self.goal_position = np.array([0.0, 0.0, -25.0]) # rising altitude to 25m
                     self.bezier_points = self.generate_bezier_curve(self.pos, self.goal_position, self.fast_vmax)
                     self.substate = 'rising'
                     print('rising')
@@ -291,10 +289,9 @@ class VehicleController(Node):
             elif self.substate == 'rising':
                 # rising to 25m && turn yaw
                 if np.linalg.norm(self.pos - self.goal_position) < self.mc_acceptance_radius:
-                    self.run_turning_yaw(self.yaw_speed)
+                    self.publish_trajectory_setpoint(pos_sp=self.goal_position, yaw_sp=self.turning_yaw(self.yaw_speed))
                 else:
-                    self.run_bezier_curve(self.bezier_points, self.goal_yaw)
-                    self.run_turning_yaw(self.yaw_speed)
+                    self.run_bezier_curve(self.bezier_points, self.turning_yaw(self.yaw_speed))
 
                 if self.depth_activation: # when drone finds the balloon
                     print('detected\nready to land')
