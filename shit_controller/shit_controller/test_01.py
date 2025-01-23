@@ -126,6 +126,16 @@ class VehicleController(Node):
         # Initialize variables
         self.depth_activation = False
 
+        # for obstacle detection
+        self.yolo_subscription = 0
+        self.obstacle_label = ""
+        self.screen_width = 0
+        self.screen_height = 0
+        self.xmin = 0
+        self.xmax = 0
+        self.ymin = 0
+        self.ymax = 0
+
 
         """
         4. Create Subscribers
@@ -179,14 +189,6 @@ class VehicleController(Node):
     def convert_global_to_local_waypoint(self, home_position_gps):
         self.home_position = self.pos   # set home position
         self.start_yaw = self.yaw     # set initial yaw
-        # for i in range(1, 8):
-        #     # gps_WP = [lat, lon, rel_alt]
-        #     wp_position = p3d.geodetic2ned(self.gps_WP[i][0], self.gps_WP[i][1], self.gps_WP[i][2] + home_position_gps[2],
-        #                                     home_position_gps[0], home_position_gps[1], home_position_gps[2])
-        #     wp_position = np.array(wp_position)
-        #     self.WP.append(wp_position)
-        # self.WP.append(np.array([0.0, 0.0, -self.landing_height]))  # landing position
-        # self.print(f'WP: {self.WP}\n')
 
     def generate_bezier_curve(self, xi, xf, vmax):
         # reset counter
@@ -293,7 +295,7 @@ class VehicleController(Node):
                 else:
                     self.run_bezier_curve(self.bezier_points, self.turning_yaw(self.yaw_speed))
 
-                if self.depth_activation: # when drone finds the balloon
+                if self.obstacle_label == "ladder": # when drone finds the balloon
                     print('detected\nready to land')
                     self.state = 'land'
                     self.substate = 'land'
@@ -337,6 +339,7 @@ class VehicleController(Node):
 
     def yolo_callback(self, msg):
         self.yolo_subscription = msg
+        self.obstacle_label = msg.label
         self.screen_width = msg.screen_width
         self.screen_height = msg.screen_height
         self.xmin = msg.xmin
