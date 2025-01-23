@@ -34,8 +34,9 @@ class ObstacleSpeaker(Node):
     def timer_callback(self):
         if self.substate == 'rising':
             self.time_counter += 1
+            print(self.time_counter)
 
-        if self.time_counter > 30:
+        if self.time_counter > 300: # 30 seconds
             msg = YoloDetection()
             msg.label = "ladder"
             msg.screen_width = float(640)
@@ -52,8 +53,8 @@ class ObstacleSpeaker(Node):
 
     def state_callback(self, msg):
         # get vehicle state
-        self.phase = msg.state
-        self.subphase = msg.substate
+        self.state = msg.state
+        self.substate = msg.substate
 
 def main(args=None):
     rclpy.init(args=args)
