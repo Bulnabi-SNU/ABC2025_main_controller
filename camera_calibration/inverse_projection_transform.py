@@ -36,48 +36,45 @@ def load_camera_info(camera_info, yaml_file):
 
 # Example usage
 def main():
-    yaml_file = 'src/camera_calibration/zed_calibration.yaml'  # Path to the YAML file
-    camera_info = '/zed/zed_node/left_raw/camera_info'
+    yaml_file = 'src/camera_calibration/zed_calibration_formatted.yaml'  # Path to the YAML file
 
-    try:
-        camera_data = load_camera_info(camera_info, yaml_file)
-        print("Camera Info:")
-        print(f"Height: {camera_data['height']}")
-        print(f"Width: {camera_data['width']}")
-        print(f"D: {camera_data['d']}")
-        print(f"K: {camera_data['k']}")
-        print(f"R: {camera_data['r']}")
-        print(f"P: {camera_data['p']}")
-    except ValueError as e:
-        print(e)
-
-
-    image_size = (640, 360)
-
-    # 주어진 데이터
-    K = np.array([
-        [266.2300109863281, 0.0, 321.7174987792969],
-        [0.0, 266.2925109863281, 177.7062530517578],
-        [0.0, 0.0, 1.0]
-    ])
-    d = np.array([-1.3494, 2.8427, 0.0002541, 0.0003107, 0.0408976])
-
-    # 입력: 2D 이미지 좌표 (u, v)
-    image_point = np.array([[320, 180]], dtype=np.float32)
-
-    # 왜곡 보정
-    undistorted_point = cv2.undistortPoints(image_point, K, d, None, K)
-
-    # 정규화된 좌표 계산
-    x, y = undistorted_point[0, 0], undistorted_point[0, 1]
-    direction_vector = np.array([x, y, 1.0])  # Z = 1로 설정
-
-    # 방향 벡터 정규화 (필요시)
-    direction_vector_normalized = direction_vector / np.linalg.norm(direction_vector)
+    with open(yaml_file, 'r') as file:
+        camera_data = yaml.full_load(file)
+    
+    # 데이터 변환 후 각 변수에 저장
+    height = float(camera_data['height'])  # Height(float)
+    width = float(camera_data['width'])   # Width(float)
+    d = np.array(camera_data['d'], dtype=np.float32)  # d(np.array)
+    k = np.array(camera_data['k'], dtype=np.float32)  # k(np.array)
+    r = np.array(camera_data['r'], dtype=np.float32)  # r(np.array)
+    p = np.array(camera_data['p'], dtype=np.float32)  # p(np.array)
 
     # 결과 출력
-    print("3D Direction Vector (Camera Coordinate):", direction_vector_normalized)
+    print("Height (float):", height)
+    print("Width (float):", width)
+    print("d (np.array):", d)
+    print("k (np.array):\n", k)
+    print("r (np.array):\n", r)
+    print("p (np.array):\n", p)
 
+    # p_inverse = np.linalg.inv(p)
+    k_inverse = np.linalg.inv(k)
+
+    u = 180
+    v = 280
+    s = 1
+    target2d = s * np.array([u, v, 1], dtype=np.float32)
+
+    target3d = np.dot(k_inverse, target2d)
+    delta_yaw = np.arctan(target3d[0] / target3d[2])
+    delta_pitch = np.arctan(target3d[1] / target3d[2])
+
+    target_position_15m = target3d/np.linalg.norm(target3d) * 15
+
+    print("\n\ntarget3d:", target3d)
+    print("delta_yaw:", delta_yaw)
+    print("delta_pitch:", delta_pitch)
+    print("target_position_15m:", target_position_15m)
 
 
 if __name__ == "__main__":
