@@ -60,7 +60,7 @@ def main():
     # p_inverse = np.linalg.inv(p)
     k_inverse = np.linalg.inv(k)
 
-    u = 180
+    u = 180 # 640
     v = 280
     s = 1
     target2d = s * np.array([u, v, 1], dtype=np.float32)

@@ -25,6 +25,7 @@ setup(
         'console_scripts': [
             'control01 = shit_controller.controller_01:main',
             'test01 = shit_controller.test_01:main',
+            'test02 = shit_controller.test_02_approach:main',
             'obstacle_speaker = shit_controller.obstacle_speaker:main'
         ],
     },
