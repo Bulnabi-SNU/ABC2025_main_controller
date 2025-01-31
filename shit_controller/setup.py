@@ -23,6 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'pwm_test = shit_controller.servo_pwm_test:main'
             'control01 = shit_controller.controller_01:main',
             'test01 = shit_controller.test_01:main',
             'test02 = shit_controller.test_02_approach:main',
