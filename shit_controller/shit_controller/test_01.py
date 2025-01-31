@@ -14,7 +14,6 @@ from px4_msgs.msg import VehicleGlobalPosition
 from px4_msgs.msg import VehicleCommand
 from px4_msgs.msg import OffboardControlMode
 from px4_msgs.msg import TrajectorySetpoint
-from px4_msgs.msg import ActuatorMorters
 
 # import msgs for object detection
 """msgs for subscription"""

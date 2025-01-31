@@ -1,5 +1,6 @@
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 from px4_msgs.msg import ActuatorServos
 import time
 
@@ -11,8 +12,15 @@ class ServoController(Node):
         
         self.servo_flag = 1
 
+        qos_profile = QoSProfile(
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+            history=HistoryPolicy.KEEP_LAST,
+            depth=1
+        )
+
         # ActuatorServos 퍼블리셔 생성
-        self.publisher_ = self.create_publisher(ActuatorServos, '/fmu/in/actuator_servos', 10)
+        self.publisher_ = self.create_publisher(ActuatorServos, '/fmu/in/actuator_servos', qos_profile)
         
         # 일정 간격으로 서보 신호 전송
         self.timer_period = 1.0
