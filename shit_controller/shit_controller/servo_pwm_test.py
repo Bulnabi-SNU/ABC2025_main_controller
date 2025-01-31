@@ -25,7 +25,7 @@ class ServoController(Node):
 
         # ActuatorServos 퍼블리셔 생성
         self.servo_actuator_publisher = self.create_publisher(ActuatorServos, '/fmu/in/actuator_servos', qos_profile)
-        self.motor_actuator_publisher = self.create_publicher(ActuatorMotors, '/fmu/in/actuator_motors', qos_profile)
+        self.motor_actuator_publisher = self.create_publisher(ActuatorMotors, '/fmu/in/actuator_motors', qos_profile)
         self.offboard_control_mode_publisher = self.create_publisher(
             OffboardControlMode, '/fmu/in/offboard_control_mode', qos_profile
         )
@@ -40,7 +40,7 @@ class ServoController(Node):
 
     def offboard_heartbeat_callback(self):
         """offboard heartbeat signal"""
-        self.publish_offboard_control_mode(position=True)
+        self.publish_offboard_control_mode()
 
 
     def send_servo_command(self):
