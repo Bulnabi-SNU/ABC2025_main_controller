@@ -14,6 +14,7 @@ from px4_msgs.msg import VehicleGlobalPosition
 from px4_msgs.msg import VehicleCommand
 from px4_msgs.msg import OffboardControlMode
 from px4_msgs.msg import TrajectorySetpoint
+from px4_msgs.msg import ActuatorMorters
 
 # import msgs for object detection
 """msgs for subscription"""
@@ -168,14 +169,19 @@ class VehicleController(Node):
         self.offboard_heartbeat = self.create_timer(self.time_period, self.offboard_heartbeat_callback)
         self.main_timer = self.create_timer(self.time_period, self.main_timer_callback)
         self.vehicle_state_timer = self.create_timer(self.time_period, self.vehicle_state_callback)
+
+
+        """
+        6. Logging
+        """
     
 
     """
     Services
     """   
-    # def print(self, *args, **kwargs):
-    #     print(*args, **kwargs)
-    #     self.logger.info(*args, **kwargs)
+    def print(self, *args, **kwargs):
+        print(*args, **kwargs)
+        self.logger.info(*args, **kwargs)
     
     def convert_global_to_local_waypoint(self, home_position_gps):
         self.home_position = self.pos   # set home position

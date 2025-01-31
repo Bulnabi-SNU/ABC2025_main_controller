@@ -103,7 +103,7 @@ class VehicleController(Node):
         self.vel = np.array([0.0, 0.0, 0.0])
         self.yaw = 0.0
         self.home_position = np.array([0.0, 0.0, 0.0])
-        
+
         # goal position and yaw
         self.goal_position = None
         self.goal_yaw = None
@@ -276,7 +276,7 @@ class VehicleController(Node):
 
         # update target buffer
         self.target_buffer.pop(0)
-        self.target_buffer.append(target3d)
+        self.target_buffer.append(target3d * 20)
 
         # calculate average target direction without None
         valid_vectors = [vec for vec in self.target_buffer if vec is not None]
