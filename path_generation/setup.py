@@ -20,6 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'dstar_bezier_path_planner = path_generation.dstar_bezier_path_planner:main',        ],
+            'dstar_bezier_path_planner = path_generation.dstar_bezier_path_planner:main',
+            'Drone_Commander = path_generation.Drone_Commander:main'
+            ],
     },
 )
