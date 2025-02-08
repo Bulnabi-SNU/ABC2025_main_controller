@@ -8,16 +8,22 @@ from geometry_msgs.msg import PoseStamped, Point
 import numpy as np
 import heapq
 import sensor_msgs_py.point_cloud2 as pc2
+import sys
 
 # 무한대 상수
 INF = float('inf')
 
 class DStarLitePathPlanner(Node):
-    def __init__(self):
+    def __init__(self, parser_mode):
         super().__init__('dstar_lite_path_planner')
 
-        # ROS2 구독자 및 퍼블리셔 설정
-        self.create_subscription(PointCloud2, '/zed/zed_node/mapping/fused_cloud', self.pcl_callback, 10)
+        # 사용자가 지정한 토픽 선택
+        if parser_mode == "custom":
+            pointcloud_topic = "/custom_fused_cloud"
+        else:
+            pointcloud_topic = "/zed/zed_node/mapping/fused_cloud"
+
+        self.create_subscription(PointCloud2, pointcloud_topic, self.pcl_callback, 10)
         self.create_subscription(Float32MultiArray, '/yolo_detection', self.balloon_callback, 10)
         self.path_pub = self.create_publisher(Path, '/planned_path', 10)
 
@@ -36,7 +42,7 @@ class DStarLitePathPlanner(Node):
         self.km = 0
         self.open_list = []  # 우선순위 큐 (heapq)
 
-        self.get_logger().info("🚀 DStarLitePathPlanner 노드가 실행되었습니다.")
+        self.get_logger().info("🚀 DStarLitePathPlanner 실행됨")
 
     # --- 포인트 클라우드 관련 함수 ---
     def pcl_callback(self, msg):
@@ -283,7 +289,17 @@ class DStarLitePathPlanner(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = DStarLitePathPlanner()
+
+    # 명령행 인자 처리 (첫 번째 인자가 있으면 사용, 없으면 기본값 "zed")
+    parser_mode = sys.argv[1] if len(sys.argv) > 1 else "zed"
+
+    # 올바른 값인지 검증 (zed 또는 custom만 허용)
+    if parser_mode not in ["zed", "custom"]:
+        print("❌ 잘못된 인자! 사용법: ros2 run path_generation dstar_lite_path_planner [NONE/custom]")
+        return
+
+    # 인자를 전달하여 노드 실행
+    node = DStarLitePathPlanner(parser_mode)
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()

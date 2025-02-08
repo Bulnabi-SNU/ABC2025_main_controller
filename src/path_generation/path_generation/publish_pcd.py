@@ -11,8 +11,8 @@ from std_msgs.msg import Header  # Header 메시지 추가
 class PCDPublisher(Node):
     def __init__(self, pcd_file):
         super().__init__('pcd_publisher')
-        self.publisher = self.create_publisher(PointCloud2, '/zed/zed_node/mapping/fused_cloud', 10)
-        self.timer = self.create_timer(100.0, self.publish_pcd)  # 1초마다 퍼블리시
+        self.publisher = self.create_publisher(PointCloud2, '/custom_fused_cloud', 10)
+        self.timer = self.create_timer(1.0, self.publish_pcd)  # 1초마다 퍼블리시
         self.pcd_file = pcd_file
         self.pcd_data = self.load_pcd(self.pcd_file)
         self.get_logger().info(f"🚀 PCD Publisher 노드가 실행되었습니다! 파일: {pcd_file}")
@@ -48,7 +48,7 @@ class PCDPublisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    pcd_file_path = "/home/gr/ros2_ws/pointcloud_0206.pcd"  # 🚨 여기에 PCD 파일 경로 입력!
+    pcd_file_path = "./assets/pointcloud_0206.pcd"  # 🚨 여기에 PCD 파일 경로 입력!
     node = PCDPublisher(pcd_file_path)
     rclpy.spin(node)
     node.destroy_node()
