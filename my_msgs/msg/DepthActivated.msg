@@ -1,1 +1,0 @@
-bool depth_activated

@@ -1,4 +1,0 @@
-vehicle_controller: # Name of node
-  ros__parameters: # ROS parameters
-    # WP: [latitude, longitude, relative altitude]
-    gps_WP1: [37.4560835, 126.9541384, 5.0]
