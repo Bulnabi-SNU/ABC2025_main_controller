@@ -48,7 +48,7 @@ class PCDPublisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    pcd_file_path = "./assets/pointcloud_0206.pcd"  # 🚨 여기에 PCD 파일 경로 입력!
+    pcd_file_path = "./assets/pointcloud_0214.pcd"  # 🚨 여기에 PCD 파일 경로 입력!
     node = PCDPublisher(pcd_file_path)
     rclpy.spin(node)
     node.destroy_node()

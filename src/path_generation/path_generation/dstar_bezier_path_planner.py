@@ -56,9 +56,6 @@ class DStarLitePathPlanner(Node):
         self.occupancy_grid, self.grid_origin, self.resolution = self.create_occupancy_grid(points, desired_resolution)
         self.get_logger().info(f"📊 Occupancy Grid 생성 완료, shape: {self.occupancy_grid.shape}")
 
-        if self.goal_pos_world:
-            self.run_dstar_lite()
-
         # 장애물 업데이트 후, 목표가 설정되어 있다면 경로 재계산
         if self.goal_pos_world:
             self.run_dstar_lite()
@@ -148,14 +145,14 @@ class DStarLitePathPlanner(Node):
             self.get_logger().debug(f"🔄 update_vertex: {s}, g: {self.g.get(s, INF)}, rhs: {self.rhs.get(s, INF)}")
 
     def compute_shortest_path(self):
-        max_iterations = 10000  # 최대 반복 횟수 제한
+        max_iterations = 50000  # 최대 반복 횟수 제한
         iteration = 0
 
         while (self.open_list and (self.open_list[0][0] < self.calculate_key(self.start_idx))) or \
             (self.rhs.get(self.start_idx, INF) != self.g.get(self.start_idx, INF)):
 
             if iteration > max_iterations:
-                self.get_logger().error("🚨 D* Lite 알고리즘이 10000번 이상 반복됨. 무한 루프 가능성 있음!")
+                self.get_logger().error("🚨 D* Lite 알고리즘이 50000번 이상 반복됨. 무한 루프 가능성 있음!")
                 break
 
             k_old, u = heapq.heappop(self.open_list)
