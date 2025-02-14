@@ -4,7 +4,7 @@ from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2
 from std_msgs.msg import Float32MultiArray
 from nav_msgs.msg import Path
-from geometry_msgs.msg import PoseStamped, Point
+from geometry_msgs.msg import PoseStamped, Point, PointStamped
 import numpy as np
 import heapq
 import sensor_msgs_py.point_cloud2 as pc2
@@ -26,6 +26,8 @@ class DStarLitePathPlanner(Node):
         self.create_subscription(PointCloud2, pointcloud_topic, self.pcl_callback, 10)
         self.create_subscription(Float32MultiArray, '/yolo_detection', self.balloon_callback, 10)
         self.path_pub = self.create_publisher(Path, '/planned_path', 10)
+        self.start_point_pub = self.create_publisher(PointStamped, '/start_point', 10)
+        self.create_timer(1.0, self.publish_start_point)
 
         # 격자 맵 관련 변수 (월드 좌표 -> 격자 좌표 변환)
         self.occupancy_grid = None    # 3D numpy array (0: free, 1: obstacle)
@@ -33,7 +35,7 @@ class DStarLitePathPlanner(Node):
         self.resolution = None        # 격자 해상도 (m)
 
         # 로봇 및 목표 월드 좌표 (예: 드론, 풍선)
-        self.start_pos_world = [0, 0, 0]  # 월드 좌표
+        self.start_pos_world = [0, 0, 0.5]  # 월드 좌표
         self.goal_pos_world = None        # 월드 좌표, balloon_callback에서 업데이트
 
         # D* Lite 관련 변수 (격자 인덱스 기준)
@@ -117,6 +119,18 @@ class DStarLitePathPlanner(Node):
             return
 
         self.run_dstar_lite()
+
+    def publish_start_point(self):
+            """ 시작점을 PointStamped 메시지로 발행 """
+            point_msg = PointStamped()
+            point_msg.header.stamp = self.get_clock().now().to_msg()
+            point_msg.header.frame_id = "map"
+
+            point_msg.point.x = float(self.start_pos_world[0])
+            point_msg.point.y = float(self.start_pos_world[1])
+            point_msg.point.z = float(self.start_pos_world[2])
+
+            self.start_point_pub.publish(point_msg)
 
     # --- D* Lite 알고리즘 관련 함수 (격자 좌표 기준) ---
     def calculate_key(self, s):
@@ -220,18 +234,10 @@ class DStarLitePathPlanner(Node):
         return self.resolution
 
     def heuristic(self, a, b):
-        """ Local Minima 방지를 위해 기존 휴리스틱에 방향성 가중치를 추가 """
         (i1, j1, k1) = a
         (i2, j2, k2) = b
 
-        # 기존 유클리드 거리 계산
-        euclidean_dist = ((i1 - i2) ** 2 + (j1 - j2) ** 2 + (k1 - k2) ** 2) ** 0.5
-
-        # 🚀 Local Minima 방지를 위한 추가 가중치
-        penalty = 0.5 * abs(i1 - i2 + j1 - j2 + k1 - k2)
-
-        return euclidean_dist + penalty  # 가중치 추가
-
+        return ((i1 - i2) ** 2 + (j1 - j2) ** 2 + (k1 - k2) ** 2) ** 0.5
 
     def reconstruct_path(self):
         current = self.start_idx
