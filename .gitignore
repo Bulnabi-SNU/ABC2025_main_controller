@@ -2,3 +2,4 @@
 /install/
 /log/
 .vscode
+/src/**/__pycache__/
