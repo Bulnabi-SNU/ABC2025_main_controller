@@ -35,14 +35,14 @@ ros2 launch zed_wrapper zed_camera.launch.py camera_model:=zed2i
 ```
 cd ~/ABC2025_main_controller
 rosfoxy # alias
-ros2 run path_generation dstar_bezier_path_planner
+ros2 run path_generation astar_fixed_start
 ```
 
 ### Terminal 3 : Publish Goal Point
 
 ```
 cd ~/ABC2025_main_controller/src/path_generation/test/
-python3 yolo_publisher.py -15.5 -1.0 -3.0 # Set Goal Location
+python3 yolo_publisher.py -1.0 8.0 0.0 # Set Goal Location
 ```
 
 ---
@@ -50,21 +50,22 @@ python3 yolo_publisher.py -15.5 -1.0 -3.0 # Set Goal Location
 ### (Optional) Terminal 4 : Visulization
 
 ```
-rviz2 -d ~/ABC2025_main_controller/assets/rivz_config.rviz
+rviz2 -d ~/ABC2025_main_controller/assets/rivz_config.rviz # when using zed pcd2 topic
+rviz2 -d ~/ABC2025_main_controller/assets/custom.rviz # when using .pcd file
 ```
 
-### (Optional) Terminal 2, 5 : Use .PCD file instead of Using ZED PCD2 topic
+### (Optional) Terminal 2, 5 : Use .pcd file instead of Using ZED PCD2 topic
 
 ```
 # Terminal 2
 cd ~/ABC2025_main_controller
 rosfoxy # alias
-ros2 run path_generation publish_pcd
+ros2 run path_generation astar_fixed_start custom
 ```
 
 ```
 # Terminal 5
 cd ~/ABC2025_main_controller
 rosfoxy # alias
-ros2 run path_generation dstar_bezier_path_planner custom
+ros2 run path_generation publish_pcd 02142 # date number
 ```
