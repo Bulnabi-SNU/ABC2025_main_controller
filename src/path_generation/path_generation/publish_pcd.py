@@ -6,6 +6,7 @@ import sensor_msgs_py.point_cloud2 as pc2
 import numpy as np
 import open3d as o3d  # Open3D를 사용하여 PCD 파일 로드
 import struct
+import sys  # 명령행 인자 처리를 위해 추가
 from std_msgs.msg import Header  # Header 메시지 추가
 
 class PCDPublisher(Node):
@@ -48,7 +49,14 @@ class PCDPublisher(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    pcd_file_path = "./assets/pointcloud_0214.pcd"  # 🚨 여기에 PCD 파일 경로 입력!
+
+    # 명령행 인자로 PCD 파일명을 받음
+    if len(sys.argv) > 1:
+        pcd_filename = sys.argv[1]  # 예: "0214"
+        pcd_file_path = f"./assets/pointcloud_{pcd_filename}.pcd"
+    else:
+        pcd_file_path = "./assets/pointcloud_02142.pcd"  # 기본값
+
     node = PCDPublisher(pcd_file_path)
     rclpy.spin(node)
     node.destroy_node()

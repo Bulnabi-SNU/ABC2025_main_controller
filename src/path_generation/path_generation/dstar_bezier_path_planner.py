@@ -4,7 +4,7 @@ from rclpy.node import Node
 from sensor_msgs.msg import PointCloud2
 from std_msgs.msg import Float32MultiArray
 from nav_msgs.msg import Path
-from geometry_msgs.msg import PoseStamped, Point
+from geometry_msgs.msg import PoseStamped, Point, PointStamped
 import numpy as np
 import heapq
 import sensor_msgs_py.point_cloud2 as pc2
@@ -26,6 +26,8 @@ class DStarLitePathPlanner(Node):
         self.create_subscription(PointCloud2, pointcloud_topic, self.pcl_callback, 10)
         self.create_subscription(Float32MultiArray, '/yolo_detection', self.balloon_callback, 10)
         self.path_pub = self.create_publisher(Path, '/planned_path', 10)
+        self.start_point_pub = self.create_publisher(PointStamped, '/start_point', 10)
+        self.create_timer(1.0, self.publish_start_point)
 
         # 격자 맵 관련 변수 (월드 좌표 -> 격자 좌표 변환)
         self.occupancy_grid = None    # 3D numpy array (0: free, 1: obstacle)
@@ -33,7 +35,7 @@ class DStarLitePathPlanner(Node):
         self.resolution = None        # 격자 해상도 (m)
 
         # 로봇 및 목표 월드 좌표 (예: 드론, 풍선)
-        self.start_pos_world = [0, 0, 0]  # 월드 좌표
+        self.start_pos_world = [0, 0, 0.5]  # 월드 좌표
         self.goal_pos_world = None        # 월드 좌표, balloon_callback에서 업데이트
 
         # D* Lite 관련 변수 (격자 인덱스 기준)
@@ -52,7 +54,7 @@ class DStarLitePathPlanner(Node):
             self.get_logger().warning("⚠️ 수신된 포인트 클라우드가 비어 있음! occupancy grid를 생성하지 않음.")
             return
 
-        desired_resolution = 0.05  # 5cm 해상도
+        desired_resolution = 0.1  # 10cm 해상도
         self.occupancy_grid, self.grid_origin, self.resolution = self.create_occupancy_grid(points, desired_resolution)
         self.get_logger().info(f"📊 Occupancy Grid 생성 완료, shape: {self.occupancy_grid.shape}")
 
@@ -74,8 +76,8 @@ class DStarLitePathPlanner(Node):
         # 3D occupancy grid 초기화 (0: free)
         grid = np.zeros(tuple(grid_shape), dtype=np.uint8)
 
-        # 장애물 확장 반경 (30cm/0.05m -> 6격자)
-        obstacle_radius = int(0.01 / resolution)
+        # 장애물 확장 반경 (30cm/0.1m -> 6격자)
+        obstacle_radius = int(0.05 / resolution)
 
         # 각 포인트를 격자 인덱스로 변환하고 장애물로 표시 (1)
         for p in points:
@@ -118,6 +120,18 @@ class DStarLitePathPlanner(Node):
 
         self.run_dstar_lite()
 
+    def publish_start_point(self):
+            """ 시작점을 PointStamped 메시지로 발행 """
+            point_msg = PointStamped()
+            point_msg.header.stamp = self.get_clock().now().to_msg()
+            point_msg.header.frame_id = "map"
+
+            point_msg.point.x = float(self.start_pos_world[0])
+            point_msg.point.y = float(self.start_pos_world[1])
+            point_msg.point.z = float(self.start_pos_world[2])
+
+            self.start_point_pub.publish(point_msg)
+
     # --- D* Lite 알고리즘 관련 함수 (격자 좌표 기준) ---
     def calculate_key(self, s):
         """ 
@@ -157,6 +171,7 @@ class DStarLitePathPlanner(Node):
 
             k_old, u = heapq.heappop(self.open_list)
             k_new = self.calculate_key(u)
+
             if k_old < k_new:
                 heapq.heappush(self.open_list, (k_new, u))
             elif self.g.get(u, INF) > self.rhs.get(u, INF):
@@ -171,6 +186,15 @@ class DStarLitePathPlanner(Node):
 
             iteration += 1
 
+            # ✅ 100번마다 현재까지의 탐색된 경로를 퍼블리시
+            if iteration % 100 == 0:
+                partial_path = self.reconstruct_partial_path()
+                if partial_path:
+                    self.publish_path(partial_path)
+                    self.get_logger().info(f"🛤️ {iteration}번째 iteration: 현재까지의 탐색 경로 퍼블리시 완료!")
+                else:
+                    self.get_logger().warning(f"⚠️ {iteration}번째 iteration: 아직 탐색된 경로 없음.")
+    
     def initialize_dstar(self):
         """ 모든 노드 초기화 및 목표 노드 설정 (격자 인덱스 기준) """
         self.g.clear()
@@ -202,7 +226,7 @@ class DStarLitePathPlanner(Node):
                 0 <= neighbor[2] < self.occupancy_grid.shape[2]):
                 neighbors.append(neighbor)
         return neighbors
-
+    
     def cost(self, a, b):
         """ a에서 b로 이동하는 비용 (장애물일 경우 INF) """
         if self.occupancy_grid[b] == 1:
@@ -212,12 +236,13 @@ class DStarLitePathPlanner(Node):
     def heuristic(self, a, b):
         (i1, j1, k1) = a
         (i2, j2, k2) = b
-        return ((i1 - i2)**2 + (j1 - j2)**2 + (k1 - k2)**2) ** 0.5
+
+        return ((i1 - i2) ** 2 + (j1 - j2) ** 2 + (k1 - k2) ** 2) ** 0.5
 
     def reconstruct_path(self):
         current = self.start_idx
         path_idx = [current]
-        max_steps = 1000
+        max_steps = 10000
         steps = 0
 
         while current != self.goal_idx and steps < max_steps:
@@ -241,6 +266,20 @@ class DStarLitePathPlanner(Node):
         if steps >= max_steps:
             self.get_logger().error("🚨 경로 재구성 중 무한 루프 발생! 탐색 종료.")
             return None
+
+        path_world = [self.grid_to_world(idx) for idx in path_idx]
+        return path_world
+
+    def reconstruct_partial_path(self):
+        """ Goal에서 출발하여 현재까지 확정된 최적의 탐색 경로를 생성 """
+        path_idx = []
+        
+        for node in self.g.keys():
+            if self.g[node] != INF:  # g값이 무한대가 아닌 노드만 포함
+                path_idx.append(node)
+
+        # g-value 기준으로 정렬 (가장 비용이 낮은 경로를 선택)
+        path_idx.sort(key=lambda n: self.g[n])
 
         path_world = [self.grid_to_world(idx) for idx in path_idx]
         return path_world
@@ -282,7 +321,6 @@ class DStarLitePathPlanner(Node):
             path_msg.poses.append(pose)
 
         self.path_pub.publish(path_msg)
-        # self.get_logger().info(f"🛤️ 퍼블리시된 경로: {path}")
 
 def main(args=None):
     rclpy.init(args=args)
