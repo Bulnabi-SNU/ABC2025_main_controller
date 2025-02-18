@@ -71,7 +71,7 @@ ros2 run path_generation publish_pcd 02142 # date number
 ```
 
 
-### (Optional) Terminal 4 : Visulization
+### (Optional) Simulation via Gazebo
 
 ```
 # Terminal 5
