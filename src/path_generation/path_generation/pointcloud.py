@@ -8,6 +8,8 @@ import cv2
 from cv_bridge import CvBridge
 from geometry_msgs.msg import TransformStamped
 import tf2_ros
+from transforms3d.euler import euler2quat
+
 
 class DepthToPointCloud(Node):
     def __init__(self):
@@ -31,10 +33,13 @@ class DepthToPointCloud(Node):
         t.transform.translation.x = 0.0
         t.transform.translation.y = 0.0
         t.transform.translation.z = 0.0
-        t.transform.rotation.x = 0.0
-        t.transform.rotation.y = 0.0
-        t.transform.rotation.z = 0.0
-        t.transform.rotation.w = 1.0
+
+        quat = euler2quat(-np.pi / 2, 0, -np.pi / 2)  # (roll, pitch, yaw)
+        t.transform.rotation.x = quat[1]  # euler2quat은 (w, x, y, z) 순서로 반환됨
+        t.transform.rotation.y = quat[2]
+        t.transform.rotation.z = quat[3]
+        t.transform.rotation.w = quat[0]
+
         self.tf_broadcaster.sendTransform(t)
         self.get_logger().info("Broadcasted static transform from 'map' to 'depth_camera_link'.")
 
@@ -81,7 +86,7 @@ class DepthToPointCloud(Node):
         # 좌표 변환: 현재 (x, y, z) -> (x, z, -y)
         # 즉, 두 번째와 세 번째 좌표를 교환하고, 세 번째 좌표에 부호 반전을 적용
         #points = np.column_stack((points[:, 0], points[:, 2], -points[:, 1]))
-        points = np.column_stack((points[:, 0], points[:, 1], points[:, 2]))
+        points = np.column_stack((points[:, 0], points[:, 2], points[:, 1]))
         
         # PointCloud2 메시지 생성 및 퍼블리시 (header.frame_id는 그대로 사용하거나 필요에 따라 변경)
         header = msg.header
