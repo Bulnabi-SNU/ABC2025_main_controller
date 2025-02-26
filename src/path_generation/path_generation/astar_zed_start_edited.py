@@ -390,7 +390,7 @@ class AStarPathPlanner(Node):
         
         return curve
 
-    def smooth_path(self, path, target_speed=4.0, max_contr8ol_points=1000):
+    def smooth_path(self, path, target_speed=4.0, max_control_points=1000):
         """A* 경로를 베지에 커브를 사용하여 부드럽게 만듭니다."""
         if len(path) < 2:
             return path
