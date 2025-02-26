@@ -69,3 +69,30 @@ cd ~/ABC2025_main_controller
 rosfoxy # alias
 ros2 run path_generation publish_pcd 02142 # date number
 ```
+
+
+### (Optional) Simulation via Gazebo
+
+```
+# Terminal 5
+MicroXRCEAgent udp4 -p 8888
+```
+
+```
+# Terminal 6
+cd ~/PX4-Autopilot
+make px4_sitl gazebo-classic
+```
+
+```
+# Terminal 7
+cd ~/Application
+./QGroundControl.AppImage
+```
+
+```
+# Terminal 8
+cd ~/ABC2025_main_controller
+rosfoxy # alias
+ros2 run path_generation Drone_Commander
+```
