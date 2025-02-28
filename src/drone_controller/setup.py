@@ -27,7 +27,8 @@ setup(
             'control01 = drone_controller.controller_01:main',
             'test01 = drone_controller.test_01:main',
             'test02 = drone_controller.test_02_approach:main',
-            'obstacle_speaker = drone_controller.obstacle_speaker:main'
+            'test03 = drone_controller.test_03_astar_follower:main',
+            'obstacle_speaker = drone_controller.obstacle_speaker:main',
         ],
     },
 )
