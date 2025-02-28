@@ -2,7 +2,7 @@ from setuptools import setup
 import os
 from glob import glob
 
-package_name = 'shit_controller'
+package_name = 'drone_controller'
 
 setup(
     name=package_name,
@@ -23,11 +23,11 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pwm_test = shit_controller.servo_pwm_test:main',
-            'control01 = shit_controller.controller_01:main',
-            'test01 = shit_controller.test_01:main',
-            'test02 = shit_controller.test_02_approach:main',
-            'obstacle_speaker = shit_controller.obstacle_speaker:main'
+            'pwm_test = drone_controller.servo_pwm_test:main',
+            'control01 = drone_controller.controller_01:main',
+            'test01 = drone_controller.test_01:main',
+            'test02 = drone_controller.test_02_approach:main',
+            'obstacle_speaker = drone_controller.obstacle_speaker:main'
         ],
     },
 )

@@ -42,7 +42,7 @@ import numpy as np
 class VehicleController(Node):
 
     def __init__(self):
-        super().__init__('shit_controller')
+        super().__init__('drone_controller')
 
         """
         0. Configure QoS profile for publishing and subscribing
@@ -57,7 +57,6 @@ class VehicleController(Node):
         """
         1. Constants
         """
-
         # time period
         self.time_period = 0.05                                  # 20 Hz
 
@@ -67,7 +66,7 @@ class VehicleController(Node):
         self.heading_acceptance_angle = 0.1                      # 0.1 rad = 5.73 deg
 
         # bezier curve constants
-        self.fast_vmax = 5.0
+        self.approach_vmax = 3.0
         self.max_acceleration = 9.81 * np.tan(10 * np.pi / 180)  # 10 degree tilt angle
         self.mc_start_speed = 0.0001
         self.mc_end_speed = 0.0001
@@ -76,6 +75,7 @@ class VehicleController(Node):
 
         # alignment constants
         self.yaw_speed = 0.1                                    # 0.1 rad = 5.73 deg
+        self.yaw_acceptance = 0.15                              # 0.15 rad = 8.59 deg
 
 
         """
@@ -103,7 +103,7 @@ class VehicleController(Node):
         self.vel = np.array([0.0, 0.0, 0.0])
         self.yaw = 0.0
         self.home_position = np.array([0.0, 0.0, 0.0])
-        
+
         # goal position and yaw
         self.goal_position = None
         self.goal_yaw = None
@@ -126,9 +126,37 @@ class VehicleController(Node):
         self.ymin = 0
         self.ymax = 0
 
+        # check target direction
+        self.target_buffer = [None] * 10
+        self.target_direction = 0
+        self.delta_yaw = 0
+        self.delta_pitch = 0
+        self.camera_height = 0
+        self.camera_width = 0
+        self.K_inverse = 0
+
+        # approach periods
+        self.approach_time_threshold = 2 * int(1 / self.time_period)  # 2 seconds
+        self.approach_time_counter = 0
+
+
 
         """
-        4. Create Subscribers
+        4. Load Data
+        """
+        # load camera calibration data
+        yaml_file = 'src/camera_calibration/zed_calibration_formatted.yaml'  # Path to the YAML file
+        with open(yaml_file, 'r') as file:
+            camera_data = yaml.full_load(file)
+        
+        self.camera_height = float(camera_data['height'])  # Height(float)
+        self.camera_width = float(camera_data['width'])   # Width(float)
+        self.K_inverse = np.linalg.inv(np.array(camera_data['k'], dtype=np.float32))  # k(np.array)
+
+
+
+        """
+        5. Create Subscribers
         """
         self.vehicle_status_subscriber = self.create_subscription(
             VehicleStatus, '/fmu/out/vehicle_status', self.vehicle_status_callback, qos_profile
@@ -147,7 +175,7 @@ class VehicleController(Node):
         )
 
         """
-        5. Create Publishers
+        6. Create Publishers
         """
         self.vehicle_command_publisher = self.create_publisher(
             VehicleCommand, '/fmu/in/vehicle_command', qos_profile
@@ -163,30 +191,21 @@ class VehicleController(Node):
         )
 
         """
-        6. timer setup
+        7. timer setup
         """
         self.offboard_heartbeat = self.create_timer(self.time_period, self.offboard_heartbeat_callback)
         self.main_timer = self.create_timer(self.time_period, self.main_timer_callback)
         self.vehicle_state_timer = self.create_timer(self.time_period, self.vehicle_state_callback)
-
-
-        """
-        6. Logging
-        """
     
 
     """
     Services
-    """   
-    def print(self, *args, **kwargs):
-        print(*args, **kwargs)
-        self.logger.info(*args, **kwargs)
-    
+    """ 
     def convert_global_to_local_waypoint(self, home_position_gps):
         self.home_position = self.pos   # set home position
         self.start_yaw = self.yaw     # set initial yaw
 
-    def generate_bezier_curve(self, xi, xf, vmax):
+    def generate_bezier_curve(self, xi, xf, vmax = 3.0):
         # reset counter
         self.bezier_counter = 0
 
@@ -247,6 +266,24 @@ class VehicleController(Node):
         direction = (next2d - now2d) / np.linalg.norm(next2d - now2d) # NED frame
         yaw = np.arctan2(direction[1], direction[0])
         return yaw
+    
+    def update_target_direction(self):
+        # calculate target direction
+        target2d = np.array([(self.xmin+self.xmax)/(2*self.screen_width)*self.camera_width, (self.ymin+self.ymax)/(2*self.screen_height)*self.camera_height, 1], dtype=np.float32)
+        target3d = np.dot(self.K_inverse, target2d)
+        self.delta_yaw = np.arctan(target3d[0] / target3d[2])
+        self.delta_pitch = np.arctan(target3d[1] / target3d[2])
+
+        # update target buffer
+        self.target_buffer.pop(0)
+        self.target_buffer.append(target3d * 20)
+
+        # calculate average target direction without None
+        valid_vectors = [vec for vec in self.target_buffer if vec is not None]
+        if valid_vectors:
+            self.target_direction = np.mean(valid_vectors, axis=0)
+        else:
+            self.target_direction = np.zeros(3)  # 기본값
 
 
     """
@@ -286,7 +323,7 @@ class VehicleController(Node):
                     )
                 elif self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD:
                     self.goal_position = np.array([0.0, 0.0, -25.0]) # rising altitude to 25m
-                    self.bezier_points = self.generate_bezier_curve(self.pos, self.goal_position, self.fast_vmax)
+                    self.bezier_points = self.generate_bezier_curve(self.pos, self.goal_position, self.approach_vmax)
                     self.substate = 'rising'
                     print('rising')
 
@@ -298,9 +335,33 @@ class VehicleController(Node):
                     self.run_bezier_curve(self.bezier_points, self.turning_yaw(self.yaw_speed))
 
                 if self.obstacle_label == "ladder": # when drone finds the balloon
-                    print('detected\nready to land')
-                    self.state = 'land'
-                    self.substate = 'land'
+                    print('detected\nready to approach')
+                    self.state = 'approach'
+                    self.substate = 'generate_path'
+        
+        elif self.state == 'approach':
+            if self.substate == 'generate_path':
+                self.goal_position = self.target_direction
+                self.bezier_points = self.generate_bezier_curve(self.pos, self.goal_position, self.approach_vmax)
+                self.substate = 'approaching'
+                print('\ngenerating path \n')
+            
+            elif self.substate == 'approaching':
+                if self.delta_yaw > self.yaw_acceptance:
+                    self.run_bezier_curve(self.bezier_points, self.turning_yaw(np.abs(self.delta_yaw)*self.yaw_speed))
+                else:
+                    self.run_bezier_curve(self.bezier_points)
+                self.approach_time_counter += 1
+
+                if self.approach_time_counter >= self.approach_time_threshold:
+                    self.substate = 'generate_path'
+                    self.approach_time_counter = 0
+            
+            # when the drone approaches the balloon near enough to calculate distance between the drone and the balloon
+            if self.depth_activation:
+                self.state = 'land'
+                self.substate = 'land'
+
                     
         elif self.state == 'land':                
             if self.substate == 'land':
@@ -348,6 +409,8 @@ class VehicleController(Node):
         self.xmax = msg.xmax
         self.ymin = msg.ymin
         self.ymax = msg.ymax
+        # update target direction. when the drone finds the balloon
+        self.update_target_direction()
     
     def depth_activation_callback(self, msg):
         self.depth_activation = msg

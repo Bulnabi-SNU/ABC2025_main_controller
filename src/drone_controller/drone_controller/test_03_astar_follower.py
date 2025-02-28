@@ -1,10 +1,9 @@
-__author__ = "Chaewon Yun"
-__contact__ = "gbll0305@gmail.com"
-
 # import rclpy
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
+
+# import required msgs
 
 # import px4_msgs
 """msgs for subscription"""
@@ -16,10 +15,15 @@ from px4_msgs.msg import VehicleCommand
 from px4_msgs.msg import OffboardControlMode
 from px4_msgs.msg import TrajectorySetpoint
 
-# import message for YOLOv5
-# from my_msgs import ~
+# import msgs for object detection
+"""msgs for subscription"""
+from my_msgs.msg import YoloDetection, DepthActivated, VehicleState
 
-# import other libraries
+from nav_msgs.msg import Path
+from geometry_msgs.msg import PointStamped, PoseStamped
+
+
+# import required libraries
 import os
 import time
 import serial
@@ -28,12 +32,20 @@ import numpy as np
 import pymap3d as p3d
 from datetime import datetime, timedelta
 
+# import required libraries;'
+from ultralytics import YOLO
+import cv2
+from cv_bridge import CvBridge, CvBridgeError
+import torch
+import yaml
+import numpy as np
+
 #import cv2
 
 class VehicleController(Node):
 
     def __init__(self):
-        super().__init__('shit_controller')
+        super().__init__('drone_controller')
 
         """
         0. Configure QoS profile for publishing and subscribing
@@ -48,27 +60,16 @@ class VehicleController(Node):
         """
         1. Constants
         """
-        # given constants
-        self.camera_to_center = 0.5                             # distance from camera to center of the vehicle
-        self.landing_height = 5.0                               # prepare auto landing at 5m
-        self.corridor_radius = 2.0
-
         # time period
         self.time_period = 0.05                                  # 20 Hz
 
         # acceptance constants
         self.mc_acceptance_radius = 0.3
-        self.nearby_acceptance_radius = 30
         self.offboard_acceptance_radius = 10.0                   # mission -> offboard acceptance radius
-        self.transition_acceptance_angle = 0.8                   # 0.8 rad = 45.98 deg
-        self.landing_acceptance_angle = 0.8                      # 0.8 rad = 45.98 deg
         self.heading_acceptance_angle = 0.1                      # 0.1 rad = 5.73 deg
 
         # bezier curve constants
-        self.very_fast_vmax = 7.0
-        self.fast_vmax = 5.0
-        self.slow_vmax = 2.5
-        self.very_slow_vmax = 1.0
+        self.approach_vmax = 3.0
         self.max_acceleration = 9.81 * np.tan(10 * np.pi / 180)  # 10 degree tilt angle
         self.mc_start_speed = 0.0001
         self.mc_end_speed = 0.0001
@@ -77,7 +78,7 @@ class VehicleController(Node):
 
         # alignment constants
         self.yaw_speed = 0.1                                    # 0.1 rad = 5.73 deg
-
+        self.yaw_acceptance = 0.15                              # 0.15 rad = 8.59 deg
 
 
         """
@@ -104,7 +105,8 @@ class VehicleController(Node):
         self.pos_gps = np.array([0.0, 0.0, 0.0])    # global
         self.vel = np.array([0.0, 0.0, 0.0])
         self.yaw = 0.0
-        
+        self.home_position = np.array([0.0, 0.0, 0.0])
+
         # goal position and yaw
         self.goal_position = None
         self.goal_yaw = None
@@ -114,9 +116,57 @@ class VehicleController(Node):
         self.bezier_counter = 0
         self.bezier_points = None
 
+        # Initialize variables
+        self.depth_activation = False
+
+        # for obstacle detection
+        self.yolo_subscription = 0
+        self.obstacle_label = ""
+        self.screen_width = 0
+        self.screen_height = 0
+        self.xmin = 0
+        self.xmax = 0
+        self.ymin = 0
+        self.ymax = 0
+
+        # check target direction
+        self.target_buffer = [None] * 10
+        self.target_direction = 0
+        self.delta_yaw = 0
+        self.delta_pitch = 0
+        self.camera_height = 0
+        self.camera_width = 0
+        self.K_inverse = 0
+
+        # approach periods
+        self.approach_time_threshold = 2 * int(1 / self.time_period)  # 2 seconds
+        self.approach_time_counter = 0
+
+        # astar path
+        self.astar_path = Path()
+        self.astar_path_flag = False
+        self.astar_start_pos = np.array([0.0, 0.0, 0.0])
+        self.astar_path_step = 0
+        self.astar_path_length = 0
+
+
 
         """
-        4. Create Subscribers
+        4. Load Data
+        """
+        # load camera calibration data
+        yaml_file = 'src/camera_calibration/zed_calibration_formatted.yaml'  # Path to the YAML file
+        with open(yaml_file, 'r') as file:
+            camera_data = yaml.full_load(file)
+        
+        self.camera_height = float(camera_data['height'])  # Height(float)
+        self.camera_width = float(camera_data['width'])   # Width(float)
+        self.K_inverse = np.linalg.inv(np.array(camera_data['k'], dtype=np.float32))  # k(np.array)
+
+
+
+        """
+        5. Create Subscribers
         """
         self.vehicle_status_subscriber = self.create_subscription(
             VehicleStatus, '/fmu/out/vehicle_status', self.vehicle_status_callback, qos_profile
@@ -127,9 +177,22 @@ class VehicleController(Node):
         self.vehicle_global_position_subscriber = self.create_subscription(
             VehicleGlobalPosition, '/fmu/out/vehicle_global_position', self.vehicle_global_position_callback, qos_profile
         )
+        self.yolo_subscriber = self.create_subscription(
+            YoloDetection, '/yolo_detection', self.yolo_callback, qos_profile
+        )
+        self.depth_activation_subscriber = self.create_subscription(
+            DepthActivated, '/depth_activated', self.depth_activation_callback, qos_profile
+        )
+
+        self.astar_path_subscriber = self.create_subscription(
+            Path, '/planned_path', self.astar_path_callback, 10
+        )
+        self.astar_start_pos_subscriber = self.create_subscription(
+            PointStamped, '/start_pos', self.astar_start_pos_callback, 10
+        )
 
         """
-        5. Create Publishers
+        6. Create Publishers
         """
         self.vehicle_command_publisher = self.create_publisher(
             VehicleCommand, '/fmu/in/vehicle_command', qos_profile
@@ -140,65 +203,24 @@ class VehicleController(Node):
         self.trajectory_setpoint_publisher = self.create_publisher(
             TrajectorySetpoint, '/fmu/in/trajectory_setpoint', qos_profile
         )
+        self.vehicle_state_publisher = self.create_publisher(
+            VehicleState, '/vehicle_state', qos_profile
+        )
 
         """
-        6. timer setup
+        7. timer setup
         """
         self.offboard_heartbeat = self.create_timer(self.time_period, self.offboard_heartbeat_callback)
-        self.vehicle_state_publisher_timer = self.create_timer(self.time_period, self.vehicle_state_publisher_callback)
         self.main_timer = self.create_timer(self.time_period, self.main_timer_callback)
+        self.vehicle_state_timer = self.create_timer(self.time_period, self.vehicle_state_callback)
     
 
     """
     Services
-    """   
-    # def print(self, *args, **kwargs):
-    #     print(*args, **kwargs)
-    #     self.logger.info(*args, **kwargs)
-    
+    """ 
     def convert_global_to_local_waypoint(self, home_position_gps):
         self.home_position = self.pos   # set home position
         self.start_yaw = self.yaw     # set initial yaw
-        # for i in range(1, 8):
-        #     # gps_WP = [lat, lon, rel_alt]
-        #     wp_position = p3d.geodetic2ned(self.gps_WP[i][0], self.gps_WP[i][1], self.gps_WP[i][2] + home_position_gps[2],
-        #                                     home_position_gps[0], home_position_gps[1], home_position_gps[2])
-        #     wp_position = np.array(wp_position)
-        #     self.WP.append(wp_position)
-        # self.WP.append(np.array([0.0, 0.0, -self.landing_height]))  # landing position
-        # self.print(f'WP: {self.WP}\n')
-
-    def generate_bezier_curve(self, xi, xf, vmax):
-        # reset counter
-        self.bezier_counter = 0
-
-        # total time calculation
-        total_time = np.linalg.norm(xf - xi) / vmax * 2      # Assume that average velocity = vmax / 2.     real velocity is lower then vmax
-        if total_time <= self.bezier_minimum_time:
-            total_time = self.bezier_minimum_time
-
-        direction = np.array((xf - xi) / np.linalg.norm(xf - xi))
-        vf = self.mc_end_speed * direction
-        if np.linalg.norm(self.vel) < self.bezier_threshold_speed:
-            vi = self.mc_start_speed * direction
-        else:
-            vi = self.vel
-        self.bezier_counter = int(1 / self.time_period) - 1
-
-        point1 = xi
-        point2 = xi + vi * total_time / 3
-        point3 = xf - vf * total_time / 3
-        point4 = xf
-
-        # Bezier curve
-        self.num_bezier = int(total_time / self.time_period)
-        bezier = np.linspace(0, 1, self.num_bezier).reshape(-1, 1)
-        bezier = point4 * bezier**3 +                             \
-                3 * point3 * bezier**2 * (1 - bezier) +           \
-                3 * point2 * bezier**1 * (1 - bezier)**2 +        \
-                1 * point1 * (1 - bezier)**3
-        
-        return bezier
     
     def run_bezier_curve(self, bezier_points, goal_yaw=None):
         if goal_yaw is None:
@@ -215,11 +237,25 @@ class VehicleController(Node):
                 position_sp = bezier_points[-1],        # last point (goal position)
                 yaw_sp = self.yaw + np.sign(np.sin(goal_yaw - self.yaw)) * self.yaw_speed
             )
+    
+    def run_astar_path(self, goal_yaw=None):
+        if goal_yaw is None:
+            goal_yaw = self.yaw
+            
+        if self.astar_path_flag:
+            if self.astar_path_step < self.astar_path_length:
+                self.astar_path_step += 1
+                self.publish_trajectory_setpoint(
+                    position_sp = np.array([
+                        self.astar_path[self.astar_path_step].pose.position.x,
+                        self.astar_path[self.astar_path_step].pose.position.y,
+                        self.astar_path[self.astar_path_step].pose.position.z
+                    ]),
+                    yaw_sp = self.yaw + np.sign(np.sin(goal_yaw - self.yaw)) * self.yaw_speed
+                )
 
-    def run_turning_yaw(self, yaw_speed):
-        self.publish_trajectory_setpoint(
-                yaw_sp = self.yaw + yaw_speed
-            )
+    def turning_yaw(self, yaw_speed):
+        return self.yaw + yaw_speed
     
     def get_braking_position(self, pos, vel):
         braking_distance = (np.linalg.norm(vel))**2 / (2 * self.max_acceleration)
@@ -232,18 +268,24 @@ class VehicleController(Node):
         yaw = np.arctan2(direction[1], direction[0])
         return yaw
     
-    def find_indices_below_threshold(self, arr, threshold):
-        return [i for i, value in enumerate(arr) if value < threshold]
-    
-    def intersection(self, arr1, arr2):
-        return [x for x in arr1 if x in arr2]
-    
-    def gimbal_reboot(self):
-        if is_jetson():
-            data_fix = bytes([0x55, 0x66, 0x01, 0x02, 0x00, 0x00, 0x00, 0x80, 0x00, 0x01])
-            data_crc = crc_xmodem(data_fix)
-            packet = bytearray(data_fix + data_crc)
-            self.ser.write(packet)
+    def update_target_direction(self):
+        # calculate target direction
+        target2d = np.array([(self.xmin+self.xmax)/(2*self.screen_width)*self.camera_width, (self.ymin+self.ymax)/(2*self.screen_height)*self.camera_height, 1], dtype=np.float32)
+        target3d = np.dot(self.K_inverse, target2d)
+        self.delta_yaw = np.arctan(target3d[0] / target3d[2])
+        self.delta_pitch = np.arctan(target3d[1] / target3d[2])
+
+        # update target buffer
+        self.target_buffer.pop(0)
+        self.target_buffer.append(target3d * 20)
+
+        # calculate average target direction without None
+        valid_vectors = [vec for vec in self.target_buffer if vec is not None]
+        if valid_vectors:
+            self.target_direction = np.mean(valid_vectors, axis=0)
+        else:
+            self.target_direction = np.zeros(3)  # 기본값
+
 
     """
     Callback functions for the timers
@@ -251,18 +293,25 @@ class VehicleController(Node):
     def offboard_heartbeat_callback(self):
         """offboard heartbeat signal"""
         self.publish_offboard_control_mode(position=True)
+    
+    def vehicle_state_callback(self):
+        msg = VehicleState()
+        msg.state = self.state
+        msg.substate = self.substate
+        self.vehicle_state_publisher.publish(msg)
 
     def main_timer_callback(self):
         if self.state == 'ready2flight':
             if self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD:
-                # self.print('\n\n<< final_taean_left >>\n\n')
-                # self.print("Offboard mode requested\n")
+                print('\n\n<< test_01 >>\n\n')
+                print("Offboard mode requested\n")
                 self.publish_vehicle_command(VehicleCommand.VEHICLE_CMD_NAV_TAKEOFF)
                 self.publish_vehicle_command(VehicleCommand.VEHICLE_CMD_COMPONENT_ARM_DISARM, param1=1.0)
             elif self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_AUTO_TAKEOFF:
                 self.convert_global_to_local_waypoint(self.pos_gps)
                 self.state = 'seek'
                 self.substate = 'takeoff'
+                print('takeoff')
                 # self.print('\n[state : 0 -> 1]\n')
 
         elif self.state == 'seek':
@@ -274,77 +323,46 @@ class VehicleController(Node):
                         param2=6.0  # offboard
                     )
                 elif self.vehicle_status.nav_state == VehicleStatus.NAVIGATION_STATE_OFFBOARD:
-                    self.goal_yaw = self.get_bearing_to_next_waypoint(self.WP[1], self.WP[2])
-                    self.goal_position = np.array([0.0, 0.0, 25.0]) # rising altitude to 25m
-                    self.bezier_points = self.generate_bezier_curve(self.pos, self.goal_position, self.fast_vmax)
+                    self.goal_position = np.array([0.0, 0.0, -25.0]) # rising altitude to 25m
+                    self.bezier_points = self.generate_bezier_curve(self.pos, self.goal_position, self.approach_vmax)
                     self.substate = 'rising'
+                    print('rising')
 
             elif self.substate == 'rising':
-                # rising to 25m && tuning yaw
+                # rising to 25m && turn yaw
                 if np.linalg.norm(self.pos - self.goal_position) < self.mc_acceptance_radius:
-                    self.run_turning_yaw(self.yaw_speed)
+                    self.publish_trajectory_setpoint(pos_sp=self.goal_position, yaw_sp=self.turning_yaw(self.yaw_speed))
                 else:
-                    self.run_bezier_curve(self.bezier_points, self.goal_yaw)
-                    self.run_turning_yaw(self.yaw_speed)
+                    self.run_bezier_curve(self.bezier_points, self.turning_yaw(self.yaw_speed))
 
-                if True: # when drone find the balloon
+                if self.astar_path_flag:
+                    print('detected\nready to approach')
                     self.state = 'approach'
-                    self.substate = 'generate path'
-
-        elif self.state == 'approach':
-            if self.substate == 'generate path':
-                # generate path to the balloon
-                self.substate = 'approaching'
+                    self.substate = 'approaching'
+        
+        elif self.state == 'approach':            
+            if self.substate == 'approaching':
+                self.run_astar_path()
             
-            elif self.substate == 'approaching':
-                # follow the path to the balloon
-                self.substate = 'generate path'
-            
-            elif self.substate == 'stop':
-                # stop when the vehicle is near the balloon
-                self.state = 'connect'
-                self.substate = 'calculate distance'
-
-        elif self.state == 'connect':
-            if self.substate == 'calculate distance':
-                # calculate distance to the balloon
-                self.substate = 'align'
-            
-            elif self.substate == 'align':
-                self.substate = 'connect'
-
-            elif self.substate == 'connect':
-                self.state = 'rtl'
-                self.substate = 'generate path'
-    
-        elif self.state == 'rtl':
-            if self.substate == 'generate path':
-                # generate path to the home position
-                self.substate = 'returning'
-            
-            elif self.substate == 'returning':
-                # follow the path to the home position
-                self.substate = 'generate path'
-            
-            elif self.substate == 'stop':
-                # stop when the vehicle is near the home position
+            # when the drone approaches the balloon near enough to calculate distance between the drone and the balloon
+            if self.depth_activation or self.path_step >= self.astar_path_length:
                 self.state = 'land'
                 self.substate = 'land'
 
                     
         elif self.state == 'land':                
             if self.substate == 'land':
-                self.print("Landing requested\n")
+                print("Landing requested\n")
                 self.publish_vehicle_command(VehicleCommand.VEHICLE_CMD_NAV_LAND)
                 self.state = -2
         
         else:
             if self.state != -2:
-                self.print("Error: Invalid state\n")
+                print("Error: Invalid state\n")
                 self.destroy_node()
                 rclpy.shutdown()
             else:
-                self.print("Mission completed")
+                print("Mission completed")
                 self.destroy_node()
                 rclpy.shutdown()
             
@@ -368,6 +386,30 @@ class VehicleController(Node):
     def vehicle_global_position_callback(self, msg):
         self.vehicle_global_position = msg
         self.pos_gps = np.array([msg.lat, msg.lon, msg.alt])
+
+    def yolo_callback(self, msg):
+        self.yolo_subscription = msg
+        self.obstacle_label = msg.label
+        self.screen_width = msg.screen_width
+        self.screen_height = msg.screen_height
+        self.xmin = msg.xmin
+        self.xmax = msg.xmax
+        self.ymin = msg.ymin
+        self.ymax = msg.ymax
+        # update target direction. when the drone finds the balloon
+        self.update_target_direction()
+    
+    def depth_activation_callback(self, msg):
+        self.depth_activation = msg
+    
+    def astar_path_callback(self, msg):
+        self.astar_path = msg.poses
+        self.astar_path_flag = True
+        self.astar_path_length = len(self.astar_path)
+        self.astar_path_step = 0
+    
+    def astar_start_pos_callback(self, msg):
+        self.astar_start_pos = np.array(msg)
 
 
     """
@@ -413,6 +455,12 @@ class VehicleController(Node):
         msg.timestamp = int(self.get_clock().now().nanoseconds / 1000)
         self.trajectory_setpoint_publisher.publish(msg)
 
+    def publish_vehicle_state(self, **kwargs):
+        msg = VehicleState()
+        msg.state = self.state
+        msg.substate = self.substate
+        self.vehicle_state_publisher.publish(msg)
+
 
 
 def is_jetson():
@@ -432,6 +480,7 @@ def main(args = None):
 
     vehicle_controller.destroy_node()
     rclpy.shutdown()
+
 
 if __name__ == '__main__':
     try:

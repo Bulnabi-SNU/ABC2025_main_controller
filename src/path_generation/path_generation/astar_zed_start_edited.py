@@ -60,6 +60,8 @@ class AStarPathPlanner(Node):
         # 사용자가 지정한 토픽 선택
         if parser_mode == "custom":
             pointcloud_topic = "/custom_fused_cloud"
+        elif parser_mode == "rtabmap":
+            pointcloud_topic = "/rtabmap/cloud_map"
         else:
             pointcloud_topic = "/zed/zed_node/mapping/fused_cloud"
 
@@ -485,9 +487,9 @@ class AStarPathPlanner(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    parser_mode = sys.argv[1] if len(sys.argv) > 1 else "zed"
+    parser_mode = sys.argv[1] if len(sys.argv) > 1 else "rtabmap"
 
-    if parser_mode not in ["zed", "custom"]:
+    if parser_mode not in ["zed", "custom", "rtabmap"]:
         print("❌ 잘못된 인자! 사용법: ros2 run path_generation astar_path_planner [NONE/custom]")
         return
 
