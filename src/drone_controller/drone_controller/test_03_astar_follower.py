@@ -221,6 +221,38 @@ class VehicleController(Node):
     def convert_global_to_local_waypoint(self, home_position_gps):
         self.home_position = self.pos   # set home position
         self.start_yaw = self.yaw     # set initial yaw
+
+    def generate_bezier_curve(self, xi, xf, vmax = 3.0):
+        # reset counter
+        self.bezier_counter = 0
+
+        # total time calculation
+        total_time = np.linalg.norm(xf - xi) / vmax * 2      # Assume that average velocity = vmax / 2.     real velocity is lower then vmax
+        if total_time <= self.bezier_minimum_time:
+            total_time = self.bezier_minimum_time
+
+        direction = np.array((xf - xi) / np.linalg.norm(xf - xi))
+        vf = self.mc_end_speed * direction
+        if np.linalg.norm(self.vel) < self.bezier_threshold_speed:
+            vi = self.mc_start_speed * direction
+        else:
+            vi = self.vel
+        self.bezier_counter = int(1 / self.time_period) - 1
+
+        point1 = xi
+        point2 = xi + vi * total_time / 3
+        point3 = xf - vf * total_time / 3
+        point4 = xf
+
+        # Bezier curve
+        self.num_bezier = int(total_time / self.time_period)
+        bezier = np.linspace(0, 1, self.num_bezier).reshape(-1, 1)
+        bezier = point4 * bezier**3 +                             \
+                3 * point3 * bezier**2 * (1 - bezier) +           \
+                3 * point2 * bezier**1 * (1 - bezier)**2 +        \
+                1 * point1 * (1 - bezier)**3
+        
+        return bezier
     
     def run_bezier_curve(self, bezier_points, goal_yaw=None):
         if goal_yaw is None:
