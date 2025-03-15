@@ -1,0 +1,9 @@
+source;share/path_generation/hook/pythonpath.ps1
+source;share/path_generation/hook/pythonpath.dsv
+source;share/path_generation/hook/pythonpath.sh
+source;share/path_generation/hook/ament_prefix_path.ps1
+source;share/path_generation/hook/ament_prefix_path.dsv
+source;share/path_generation/hook/ament_prefix_path.sh
+source;../../build/path_generation/share/path_generation/hook/pythonpath_develop.ps1
+source;../../build/path_generation/share/path_generation/hook/pythonpath_develop.dsv
+source;../../build/path_generation/share/path_generation/hook/pythonpath_develop.sh

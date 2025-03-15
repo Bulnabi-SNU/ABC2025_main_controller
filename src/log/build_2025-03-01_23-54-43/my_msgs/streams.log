@@ -1,0 +1,266 @@
+[0.091s] Invoking command in '/home/yoonho/ABC2025_main_controller/src/build/my_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/yoonho/ABC2025_main_controller/install/yolo_detection:/home/yoonho/ABC2025_main_controller/install/drone_controller:/home/yoonho/ABC2025_main_controller/install/path_generation:/home/yoonho/ABC2025_main_controller/install/image_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection:/opt/ros/foxy /usr/bin/cmake /home/yoonho/ABC2025_main_controller/src/my_msgs -DCMAKE_INSTALL_PREFIX=/home/yoonho/ABC2025_main_controller/src/install/my_msgs
+[0.110s] [0mCMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+[0.112s]   Compatibility with CMake < 3.10 will be removed from a future version of
+[0.113s]   CMake.
+[0.114s] 
+[0.114s]   Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+[0.115s]   to tell CMake that the project requires at least <min> but has been updated
+[0.122s]   to work with policies introduced by <max> or earlier.
+[0.123s] 
+[0.123s] [0m
+[0.323s] -- The C compiler identification is GNU 9.4.0
+[0.600s] -- The CXX compiler identification is GNU 9.4.0
+[0.629s] -- Detecting C compiler ABI info
+[0.862s] -- Detecting C compiler ABI info - done
+[0.931s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.935s] -- Detecting C compile features
+[0.936s] -- Detecting C compile features - done
+[0.972s] -- Detecting CXX compiler ABI info
+[1.253s] -- Detecting CXX compiler ABI info - done
+[1.325s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.326s] -- Detecting CXX compile features
+[1.329s] -- Detecting CXX compile features - done
+[1.371s] -- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)
+[1.381s] -- Found ament_cmake_core: 0.9.12 (/opt/ros/foxy/share/ament_cmake_core/cmake)
+[1.518s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3")
+[1.519s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[2.801s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.849s] -- Found rosidl_adapter: 1.3.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[3.415s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")
+[3.570s] -- Found FastRTPS: /opt/ros/foxy/include
+[3.941s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[4.106s] -- Found std_msgs: 2.0.5 (/opt/ros/foxy/share/std_msgs/cmake)
+[4.293s] -- Found sensor_msgs: 2.0.5 (/opt/ros/foxy/share/sensor_msgs/cmake)
+[4.933s] -- Found PythonInterp: /usr/bin/python3 (found version "3.8.10")
+[6.096s] -- Found ament_cmake_ros: 0.9.2 (/opt/ros/foxy/share/ament_cmake_ros/cmake)
+[7.486s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[8.095s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[8.255s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3.5")
+[8.265s] -- Found python_cmake_module: 0.8.1 (/opt/ros/foxy/share/python_cmake_module/cmake)
+[8.446s] -- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.8.so (found suitable version "3.8.10", minimum required is "3.5")
+[8.446s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[8.447s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.8
+[8.448s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.8.so
+[8.580s] -- Found PythonExtra: .so
+[9.612s] -- Found ament_lint_auto: 0.9.8 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[9.761s] -- Added test 'copyright' to check source files copyright and LICENSE
+[9.768s] -- Added test 'lint_cmake' to check CMake code style
+[9.777s] -- Added test 'xmllint' to check XML markup files
+[9.792s] -- Configuring done (9.7s)
+[10.085s] -- Generating done (0.3s)
+[10.128s] -- Build files have been written to: /home/yoonho/ABC2025_main_controller/src/build/my_msgs
+[10.155s] Invoked command in '/home/yoonho/ABC2025_main_controller/src/build/my_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/yoonho/ABC2025_main_controller/install/yolo_detection:/home/yoonho/ABC2025_main_controller/install/drone_controller:/home/yoonho/ABC2025_main_controller/install/path_generation:/home/yoonho/ABC2025_main_controller/install/image_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection:/opt/ros/foxy /usr/bin/cmake /home/yoonho/ABC2025_main_controller/src/my_msgs -DCMAKE_INSTALL_PREFIX=/home/yoonho/ABC2025_main_controller/src/install/my_msgs
+[10.162s] Invoking command in '/home/yoonho/ABC2025_main_controller/src/build/my_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/yoonho/ABC2025_main_controller/install/yolo_detection:/home/yoonho/ABC2025_main_controller/install/drone_controller:/home/yoonho/ABC2025_main_controller/install/path_generation:/home/yoonho/ABC2025_main_controller/install/image_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection:/opt/ros/foxy /usr/bin/cmake --build /home/yoonho/ABC2025_main_controller/src/build/my_msgs -- -j8 -l8
+[10.207s] [  2%] [34m[1mGenerating C code for ROS interfaces[0m
+[10.223s] [  4%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[11.677s] [  4%] Built target my_msgs__cpp
+[11.700s] [  6%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[11.706s] [  8%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[11.714s] [ 10%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[11.862s] [ 12%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_generator_c.dir/rosidl_generator_c/my_msgs/msg/detail/depth_activated__functions.c.o[0m
+[11.864s] [ 14%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_generator_c.dir/rosidl_generator_c/my_msgs/msg/detail/yolo_detection__functions.c.o[0m
+[11.882s] [ 17%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_generator_c.dir/rosidl_generator_c/my_msgs/msg/detail/vehicle_state__functions.c.o[0m
+[12.144s] [ 19%] [32m[1mLinking C shared library libmy_msgs__rosidl_generator_c.so[0m
+[12.355s] [ 19%] Built target my_msgs__rosidl_generator_c
+[12.389s] [ 21%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[12.424s] [ 23%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[12.791s] [ 25%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/my_msgs/msg/yolo_detection__type_support.cpp.o[0m
+[12.813s] [ 27%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/my_msgs/msg/depth_activated__type_support.cpp.o[0m
+[12.865s] [ 29%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/my_msgs/msg/vehicle_state__type_support.cpp.o[0m
+[12.931s] [ 31%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/my_msgs/msg/detail/yolo_detection__type_support.cpp.o[0m
+[12.944s] [ 34%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/my_msgs/msg/detail/depth_activated__type_support.cpp.o[0m
+[13.244s] [ 36%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/my_msgs/msg/detail/dds_fastrtps/yolo_detection__type_support.cpp.o[0m
+[13.866s] [ 38%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/my_msgs/msg/yolo_detection__type_support.cpp.o[0m
+[13.989s] [ 40%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/my_msgs/msg/depth_activated__type_support.cpp.o[0m
+[14.127s] [ 42%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/my_msgs/msg/vehicle_state__type_support.cpp.o[0m
+[14.265s] [ 44%] [32m[1mLinking CXX shared library libmy_msgs__rosidl_typesupport_c.so[0m
+[14.266s] [ 46%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/my_msgs/msg/detail/yolo_detection__type_support.c.o[0m
+[14.417s] [ 48%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/my_msgs/msg/detail/depth_activated__type_support.c.o[0m
+[14.476s] [ 51%] [32m[1mLinking CXX shared library libmy_msgs__rosidl_typesupport_cpp.so[0m
+[14.484s] [ 53%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/my_msgs/msg/detail/vehicle_state__type_support.cpp.o[0m
+[14.487s] [ 53%] Built target my_msgs__rosidl_typesupport_c
+[14.525s] [ 55%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/my_msgs/msg/detail/vehicle_state__type_support.c.o[0m
+[14.633s] [ 55%] Built target my_msgs__rosidl_typesupport_cpp
+[14.695s] [ 57%] [32m[1mLinking C shared library libmy_msgs__rosidl_typesupport_introspection_c.so[0m
+[14.805s] [ 57%] Built target my_msgs__rosidl_typesupport_introspection_c
+[15.636s] [ 59%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/my_msgs/msg/detail/dds_fastrtps/vehicle_state__type_support.cpp.o[0m
+[15.752s] [ 61%] [32m[1mLinking CXX shared library libmy_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[15.981s] [ 61%] Built target my_msgs__rosidl_typesupport_introspection_cpp
+[17.685s] [ 63%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/my_msgs/msg/detail/dds_fastrtps/depth_activated__type_support.cpp.o[0m
+[19.528s] [ 65%] [32m[1mLinking CXX shared library libmy_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[19.865s] [ 65%] Built target my_msgs__rosidl_typesupport_fastrtps_cpp
+[19.891s] [ 68%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[21.394s] [ 70%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/my_msgs/msg/detail/yolo_detection__type_support_c.cpp.o[0m
+[23.042s] [ 74%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/my_msgs/msg/detail/depth_activated__type_support_c.cpp.o[0m
+[23.043s] [ 74%] [32mBuilding CXX object CMakeFiles/my_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/my_msgs/msg/detail/vehicle_state__type_support_c.cpp.o[0m
+[24.649s] [ 76%] [32m[1mLinking CXX shared library libmy_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[25.049s] [ 76%] Built target my_msgs__rosidl_typesupport_fastrtps_c
+[25.095s] [ 76%] Built target my_msgs
+[25.141s] [ 78%] [34m[1mGenerating Python code for ROS interfaces[0m
+[28.144s] [ 78%] Built target my_msgs__py
+[28.193s] [ 80%] [32mBuilding C object CMakeFiles/my_msgs__python.dir/rosidl_generator_py/my_msgs/msg/_yolo_detection_s.c.o[0m
+[28.196s] [ 82%] [32mBuilding C object CMakeFiles/my_msgs__python.dir/rosidl_generator_py/my_msgs/msg/_vehicle_state_s.c.o[0m
+[28.198s] [ 85%] [32mBuilding C object CMakeFiles/my_msgs__python.dir/rosidl_generator_py/my_msgs/msg/_depth_activated_s.c.o[0m
+[28.625s] [ 87%] [32m[1mLinking C shared library rosidl_generator_py/my_msgs/libmy_msgs__python.so[0m
+[28.765s] [ 87%] Built target my_msgs__python
+[28.807s] [ 89%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/my_msgs/_my_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[28.811s] [ 91%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/my_msgs/_my_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[28.821s] [ 93%] [32mBuilding C object CMakeFiles/my_msgs__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/my_msgs/_my_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[29.140s] [ 95%] [32m[1mLinking C shared library rosidl_generator_py/my_msgs/my_msgs_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so[0m
+[29.196s] [ 97%] [32m[1mLinking CXX shared library rosidl_generator_py/my_msgs/my_msgs_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so[0m
+[29.215s] [100%] [32m[1mLinking C shared library rosidl_generator_py/my_msgs/my_msgs_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so[0m
+[29.395s] [100%] Built target my_msgs__rosidl_typesupport_introspection_c__pyext
+[29.410s] [100%] Built target my_msgs__rosidl_typesupport_c__pyext
+[29.588s] [100%] Built target my_msgs__rosidl_typesupport_fastrtps_c__pyext
+[29.614s] Invoked command in '/home/yoonho/ABC2025_main_controller/src/build/my_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/yoonho/ABC2025_main_controller/install/yolo_detection:/home/yoonho/ABC2025_main_controller/install/drone_controller:/home/yoonho/ABC2025_main_controller/install/path_generation:/home/yoonho/ABC2025_main_controller/install/image_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection:/opt/ros/foxy /usr/bin/cmake --build /home/yoonho/ABC2025_main_controller/src/build/my_msgs -- -j8 -l8
+[29.665s] Invoking command in '/home/yoonho/ABC2025_main_controller/src/build/my_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/yoonho/ABC2025_main_controller/install/yolo_detection:/home/yoonho/ABC2025_main_controller/install/drone_controller:/home/yoonho/ABC2025_main_controller/install/path_generation:/home/yoonho/ABC2025_main_controller/install/image_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection:/opt/ros/foxy /usr/bin/cmake --install /home/yoonho/ABC2025_main_controller/src/build/my_msgs
+[29.690s] -- Install configuration: ""
+[29.691s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/ament_index/resource_index/rosidl_interfaces/my_msgs
+[29.692s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs
+[29.692s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg
+[29.694s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/depth_activated.h
+[29.694s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/rosidl_generator_c__visibility_control.h
+[29.694s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/yolo_detection.h
+[29.694s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/vehicle_state.h
+[29.695s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail
+[29.695s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__struct.h
+[29.695s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__struct.h
+[29.696s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__functions.c
+[29.696s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__struct.h
+[29.696s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__functions.h
+[29.701s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__functions.h
+[29.702s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__functions.h
+[29.702s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__functions.c
+[29.702s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__type_support.h
+[29.703s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__type_support.h
+[29.703s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__functions.c
+[29.703s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__type_support.h
+[29.704s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/library_path.sh
+[29.704s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/library_path.dsv
+[29.705s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_generator_c.so
+[29.706s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_generator_c.so" to ""
+[29.707s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs
+[29.707s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg
+[29.708s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[29.708s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail
+[29.708s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__rosidl_typesupport_fastrtps_c.h
+[29.709s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__rosidl_typesupport_fastrtps_c.h
+[29.709s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__rosidl_typesupport_fastrtps_c.h
+[29.709s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_fastrtps_c.so
+[29.710s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_fastrtps_c.so" to ""
+[29.711s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs
+[29.711s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg
+[29.711s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[29.711s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail
+[29.712s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__rosidl_typesupport_fastrtps_cpp.hpp
+[29.712s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__rosidl_typesupport_fastrtps_cpp.hpp
+[29.712s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__rosidl_typesupport_fastrtps_cpp.hpp
+[29.713s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/dds_fastrtps
+[29.713s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_fastrtps_cpp.so
+[29.713s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""
+[29.714s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs
+[29.717s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg
+[29.718s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[29.718s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail
+[29.719s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__rosidl_typesupport_introspection_c.h
+[29.720s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__type_support.c
+[29.721s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__type_support.c
+[29.722s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__type_support.c
+[29.722s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__rosidl_typesupport_introspection_c.h
+[29.723s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__rosidl_typesupport_introspection_c.h
+[29.723s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_introspection_c.so
+[29.724s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_introspection_c.so" to ""
+[29.725s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_c.so
+[29.725s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_c.so" to ""
+[29.725s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs
+[29.726s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg
+[29.726s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/yolo_detection.hpp
+[29.727s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/vehicle_state.hpp
+[29.727s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/rosidl_generator_cpp__visibility_control.hpp
+[29.728s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/depth_activated.hpp
+[29.728s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail
+[29.729s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__type_support.hpp
+[29.729s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__type_support.hpp
+[29.729s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__struct.hpp
+[29.729s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__type_support.hpp
+[29.729s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__traits.hpp
+[29.730s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__struct.hpp
+[29.730s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__builder.hpp
+[29.730s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__builder.hpp
+[29.730s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__builder.hpp
+[29.730s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__traits.hpp
+[29.731s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__struct.hpp
+[29.731s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__traits.hpp
+[29.731s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs
+[29.731s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg
+[29.731s] -- Up-to-date: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail
+[29.732s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__type_support.cpp
+[29.732s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__type_support.cpp
+[29.732s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/yolo_detection__rosidl_typesupport_introspection_cpp.hpp
+[29.732s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__rosidl_typesupport_introspection_cpp.hpp
+[29.736s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/depth_activated__rosidl_typesupport_introspection_cpp.hpp
+[29.737s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/include/my_msgs/msg/detail/vehicle_state__type_support.cpp
+[29.737s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_introspection_cpp.so
+[29.738s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_introspection_cpp.so" to ""
+[29.738s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_cpp.so
+[29.738s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__rosidl_typesupport_cpp.so" to ""
+[29.739s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/pythonpath.sh
+[29.739s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/pythonpath.dsv
+[29.740s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/__init__.py
+[29.912s] Compiling '/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/__init__.py'...
+[29.937s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg
+[29.939s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg/_depth_activated.py
+[29.940s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg/_depth_activated_s.c
+[29.940s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg/_yolo_detection.py
+[29.941s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg/_yolo_detection_s.c
+[29.942s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg/_vehicle_state.py
+[29.942s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg/__init__.py
+[29.943s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/msg/_vehicle_state_s.c
+[29.944s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/my_msgs_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so
+[29.944s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/my_msgs_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so" to ""
+[29.945s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/my_msgs_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so
+[29.945s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/my_msgs_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so" to ""
+[29.945s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/my_msgs_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so
+[29.945s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/python3.8/site-packages/my_msgs/my_msgs_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so" to ""
+[29.946s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__python.so
+[29.946s] -- Set non-toolchain portion of runtime path of "/home/yoonho/ABC2025_main_controller/src/install/my_msgs/lib/libmy_msgs__python.so" to ""
+[29.947s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/msg/YoloDetection.idl
+[29.947s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/msg/DepthActivated.idl
+[29.947s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/msg/VehicleState.idl
+[29.948s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/msg/YoloDetection.msg
+[29.948s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/msg/DepthActivated.msg
+[29.949s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/msg/VehicleState.msg
+[29.950s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/ament_index/resource_index/package_run_dependencies/my_msgs
+[29.951s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/ament_index/resource_index/parent_prefix_path/my_msgs
+[29.952s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/ament_prefix_path.sh
+[29.952s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/ament_prefix_path.dsv
+[29.953s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/path.sh
+[29.953s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/environment/path.dsv
+[29.954s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/local_setup.bash
+[29.954s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/local_setup.sh
+[29.955s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/local_setup.zsh
+[29.955s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/local_setup.dsv
+[29.955s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/package.dsv
+[29.956s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/ament_index/resource_index/packages/my_msgs
+[29.957s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_generator_cExport.cmake
+[29.958s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_generator_cExport-noconfig.cmake
+[29.958s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_introspection_cExport.cmake
+[29.960s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[29.963s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_cExport.cmake
+[29.964s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_cExport-noconfig.cmake
+[29.965s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_generator_cppExport.cmake
+[29.966s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_introspection_cppExport.cmake
+[29.967s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[29.968s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_cppExport.cmake
+[29.968s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgs__rosidl_typesupport_cppExport-noconfig.cmake
+[29.969s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/rosidl_cmake-extras.cmake
+[29.973s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/ament_cmake_export_dependencies-extras.cmake
+[29.975s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/ament_cmake_export_libraries-extras.cmake
+[29.975s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/ament_cmake_export_targets-extras.cmake
+[29.979s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/ament_cmake_export_include_directories-extras.cmake
+[29.980s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[29.982s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[29.983s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgsConfig.cmake
+[29.985s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/cmake/my_msgsConfig-version.cmake
+[29.987s] -- Installing: /home/yoonho/ABC2025_main_controller/src/install/my_msgs/share/my_msgs/package.xml
+[29.993s] Invoked command in '/home/yoonho/ABC2025_main_controller/src/build/my_msgs' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/yoonho/ABC2025_main_controller/install/yolo_detection:/home/yoonho/ABC2025_main_controller/install/drone_controller:/home/yoonho/ABC2025_main_controller/install/path_generation:/home/yoonho/ABC2025_main_controller/install/image_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection:/opt/ros/foxy /usr/bin/cmake --install /home/yoonho/ABC2025_main_controller/src/build/my_msgs

@@ -1,0 +1,11 @@
+[0.000000] (-) TimerEvent: {}
+[0.000537] (-) JobUnselected: {'identifier': 'ORB_SLAM3'}
+[0.000681] (-) JobUnselected: {'identifier': 'depth_detection'}
+[0.000733] (-) JobUnselected: {'identifier': 'drone_controller'}
+[0.000762] (-) JobUnselected: {'identifier': 'image_detection'}
+[0.000821] (-) JobUnselected: {'identifier': 'my_msgs'}
+[0.000877] (-) JobUnselected: {'identifier': 'orbslam3_ros2'}
+[0.000941] (-) JobUnselected: {'identifier': 'path_generation'}
+[0.000974] (-) JobUnselected: {'identifier': 'px4_msgs'}
+[0.000991] (-) JobUnselected: {'identifier': 'yolo_detection'}
+[0.001006] (-) EventReactorShutdown: {}

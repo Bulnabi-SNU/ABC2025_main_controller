@@ -1,0 +1,6 @@
+msg/DepthActivated.idl
+msg/DepthActivated.msg
+msg/VehicleState.idl
+msg/VehicleState.msg
+msg/YoloDetection.idl
+msg/YoloDetection.msg

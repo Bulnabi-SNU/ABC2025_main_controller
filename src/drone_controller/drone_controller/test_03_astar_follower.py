@@ -77,7 +77,7 @@ class VehicleController(Node):
         self.bezier_minimum_time = 3.0
 
         # alignment constants
-        self.yaw_speed = 0.1                                    # 0.1 rad = 5.73 deg
+        self.yaw_speed = 0.00                                    # 0.1 rad = 5.73 deg
         self.yaw_acceptance = 0.15                              # 0.15 rad = 8.59 deg
 
 

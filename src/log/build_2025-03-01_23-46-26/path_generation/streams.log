@@ -1,0 +1,46 @@
+[2.543s] Invoking command in '/home/yoonho/ABC2025_main_controller/src/build/path_generation': PYTHONPATH=/home/yoonho/ABC2025_main_controller/src/build/path_generation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/yoonho/ABC2025_main_controller/src/build/path_generation/build --no-deps symlink_data
+[2.956s] /home/yoonho/.local/lib/python3.8/site-packages/setuptools/dist.py:495: SetuptoolsDeprecationWarning: Invalid dash-separated options
+[2.956s] !!
+[2.956s] 
+[2.956s]         ********************************************************************************
+[2.957s]         Usage of dash-separated 'script-dir' will not be supported in future
+[2.957s]         versions. Please use the underscore name 'script_dir' instead.
+[2.957s] 
+[2.957s]         By 2025-Mar-03, you need to update your project and remove deprecated calls
+[2.957s]         or your builds will no longer be supported.
+[2.957s] 
+[2.958s]         See https://setuptools.pypa.io/en/latest/userguide/declarative_config.html for details.
+[2.958s]         ********************************************************************************
+[2.958s] 
+[2.958s] !!
+[2.958s]   opt = self.warn_dash_deprecation(opt, section)
+[3.019s] /home/yoonho/.local/lib/python3.8/site-packages/setuptools/_distutils/dist.py:261: UserWarning: Unknown distribution option: 'tests_require'
+[3.019s]   warnings.warn(msg)
+[3.546s] running develop
+[4.255s] running egg_info
+[4.315s] creating path_generation.egg-info
+[4.315s] writing path_generation.egg-info/PKG-INFO
+[4.316s] writing dependency_links to path_generation.egg-info/dependency_links.txt
+[4.316s] writing entry points to path_generation.egg-info/entry_points.txt
+[4.317s] writing requirements to path_generation.egg-info/requires.txt
+[4.317s] writing top-level names to path_generation.egg-info/top_level.txt
+[4.328s] writing manifest file 'path_generation.egg-info/SOURCES.txt'
+[4.445s] reading manifest file 'path_generation.egg-info/SOURCES.txt'
+[4.447s] writing manifest file 'path_generation.egg-info/SOURCES.txt'
+[4.636s] running build_ext
+[4.636s] Creating /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/python3.8/site-packages/path-generation.egg-link (link to .)
+[4.638s] Installing Drone_Commander script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.638s] Installing astar_fixed_start script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.638s] Installing astar_fixed_start_edited script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.639s] Installing astar_fixed_start_simulation script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.639s] Installing astar_zed_start script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.639s] Installing dstar_bezier_path_planner script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.640s] Installing pointcloud script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.640s] Installing publish_pcd script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation
+[4.641s] 
+[4.641s] Installed /home/yoonho/ABC2025_main_controller/src/build/path_generation
+[4.642s] running symlink_data
+[4.642s] creating /home/yoonho/ABC2025_main_controller/src/install/path_generation/share/ament_index/resource_index/packages
+[4.643s] symbolically linking /home/yoonho/ABC2025_main_controller/src/build/path_generation/resource/path_generation -> /home/yoonho/ABC2025_main_controller/src/install/path_generation/share/ament_index/resource_index/packages
+[4.643s] symbolically linking /home/yoonho/ABC2025_main_controller/src/build/path_generation/package.xml -> /home/yoonho/ABC2025_main_controller/src/install/path_generation/share/path_generation
+[4.738s] Invoked command in '/home/yoonho/ABC2025_main_controller/src/build/path_generation' returned '0': PYTHONPATH=/home/yoonho/ABC2025_main_controller/src/build/path_generation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/yoonho/ABC2025_main_controller/src/build/path_generation/build --no-deps symlink_data

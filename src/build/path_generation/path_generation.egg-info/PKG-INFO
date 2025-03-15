@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: path_generation
+Version: 0.0.0
+Summary: TODO: Package description
+Maintainer: yoonho
+Maintainer-email: yoonho@todo.todo
+License: TODO: License declaration
+Requires-Dist: setuptools
