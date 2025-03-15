@@ -1,0 +1,106 @@
+[0.000000] (-) TimerEvent: {}
+[0.000575] (-) JobUnselected: {'identifier': 'ORB_SLAM3'}
+[0.000952] (-) JobUnselected: {'identifier': 'depth_detection'}
+[0.001270] (-) JobUnselected: {'identifier': 'drone_controller'}
+[0.001372] (-) JobUnselected: {'identifier': 'image_detection'}
+[0.001513] (-) JobUnselected: {'identifier': 'my_msgs'}
+[0.001591] (-) JobUnselected: {'identifier': 'orbslam3_ros2'}
+[0.001651] (-) JobUnselected: {'identifier': 'px4_msgs'}
+[0.001683] (-) JobUnselected: {'identifier': 'yolo_detection'}
+[0.001721] (path_generation) JobQueued: {'identifier': 'path_generation', 'dependencies': OrderedDict()}
+[0.001770] (path_generation) JobStarted: {'identifier': 'path_generation'}
+[0.099396] (-) TimerEvent: {}
+[0.200075] (-) TimerEvent: {}
+[0.300716] (-) TimerEvent: {}
+[0.401103] (-) TimerEvent: {}
+[0.501830] (-) TimerEvent: {}
+[0.604201] (-) TimerEvent: {}
+[0.704635] (-) TimerEvent: {}
+[0.805071] (-) TimerEvent: {}
+[0.905884] (-) TimerEvent: {}
+[1.006597] (-) TimerEvent: {}
+[1.106919] (-) TimerEvent: {}
+[1.207494] (-) TimerEvent: {}
+[1.308264] (-) TimerEvent: {}
+[1.408707] (-) TimerEvent: {}
+[1.509133] (-) TimerEvent: {}
+[1.609608] (-) TimerEvent: {}
+[1.710079] (-) TimerEvent: {}
+[1.810727] (-) TimerEvent: {}
+[1.911164] (-) TimerEvent: {}
+[2.011524] (-) TimerEvent: {}
+[2.111855] (-) TimerEvent: {}
+[2.212286] (-) TimerEvent: {}
+[2.312605] (-) TimerEvent: {}
+[2.412999] (-) TimerEvent: {}
+[2.513524] (-) TimerEvent: {}
+[2.542702] (path_generation) Command: {'cmd': ['/usr/bin/python3', '-W', 'ignore:setup.py install is deprecated', '-W', 'ignore:easy_install command is deprecated', 'setup.py', 'develop', '--editable', '--build-directory', '/home/yoonho/ABC2025_main_controller/src/build/path_generation/build', '--no-deps', 'symlink_data'], 'cwd': '/home/yoonho/ABC2025_main_controller/src/build/path_generation', 'env': {'GJS_DEBUG_TOPICS': 'JS ERROR;JS LOG', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'yoonho', 'LC_TIME': 'ja_JP.UTF-8', 'SSH_AGENT_PID': '1927', 'ROS_PACKAGE_PATH': ':PATH/ORB_SLAM3/Examples/ROS', 'XDG_SESSION_TYPE': 'x11', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/home/yoonho/ABC2025_main_controller/install/px4_msgs/lib:/home/yoonho/ABC2025_main_controller/install/my_msgs/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib::/home/yoonho/PX4-Autopilot/build/px4_sitl_default/build_gazebo-classic', 'HOME': '/home/yoonho', 'OLDPWD': '/home/yoonho/ABC2025_main_controller', 'DESKTOP_SESSION': 'ubuntu', 'GIO_LAUNCHED_DESKTOP_FILE': '/usr/share/applications/terminator.desktop', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'LC_MONETARY': 'ja_JP.UTF-8', 'MANAGERPID': '1821', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1000/bus', 'COLORTERM': 'truecolor', 'TERMINATOR_DBUS_NAME': 'net.tenshu.Terminator21a9d5db22c73a993ff0b42f64b396873', 'GIO_LAUNCHED_DESKTOP_FILE_PID': '3820', 'IM_CONFIG_PHASE': '1', 'COLCON_PREFIX_PATH': '/home/yoonho/ABC2025_main_controller/install', 'ROS_DISTRO': 'foxy', 'LOGNAME': 'yoonho', 'JOURNAL_STREAM': '8:44020', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'yoonho', 'TERM': 'xterm-256color', 'GAZEBO_MODEL_PATH': ':/home/yoonho/PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/models', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ROS_LOCALHOST_ONLY': '0', 'WINDOWPATH': '2', 'PATH': '/opt/ros/foxy/bin:/opt/gcc-arm-none-eabi-9-2020-q2-update/bin:/home/yoonho/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin', 'SESSION_MANAGER': 'local/yoonho-950SBE-951SBE:@/tmp/.ICE-unix/1965,unix/yoonho-950SBE-951SBE:/tmp/.ICE-unix/1965', 'INVOCATION_ID': 'fb2256abe99547568347813878bedfba', 'XDG_MENU_PREFIX': 'gnome-', 'LC_ADDRESS': 'ja_JP.UTF-8', 'XDG_RUNTIME_DIR': '/run/user/1000', 'DISPLAY': ':0', 'TERMINATOR_DBUS_PATH': '/net/tenshu/Terminator2', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'LC_TELEPHONE': 'ja_JP.UTF-8', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1000/gdm/Xauthority', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:', 'SSH_AUTH_SOCK': '/run/user/1000/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/yoonho/ABC2025_main_controller/install/yolo_detection:/home/yoonho/ABC2025_main_controller/install/drone_controller:/home/yoonho/ABC2025_main_controller/install/px4_msgs:/home/yoonho/ABC2025_main_controller/install/path_generation:/home/yoonho/ABC2025_main_controller/install/my_msgs:/home/yoonho/ABC2025_main_controller/install/image_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection:/opt/ros/foxy', 'SHELL': '/bin/bash', 'LC_NAME': 'ja_JP.UTF-8', 'TERMINATOR_UUID': 'urn:uuid:d2bc6950-61da-445b-9037-95a9cf7eff08', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'LC_MEASUREMENT': 'ja_JP.UTF-8', 'GPG_AGENT_INFO': '/run/user/1000/gnupg/S.gpg-agent:0:1', 'GJS_DEBUG_OUTPUT': 'stderr', 'LC_IDENTIFICATION': 'ja_JP.UTF-8', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/yoonho/ABC2025_main_controller/src/build/path_generation', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'GAZEBO_PLUGIN_PATH': ':/home/yoonho/PX4-Autopilot/build/px4_sitl_default/build_gazebo-classic', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/yoonho/ABC2025_main_controller/src/build/path_generation/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/python3.8/site-packages:/home/yoonho/ABC2025_main_controller/build/yolo_detection:/home/yoonho/ABC2025_main_controller/install/yolo_detection/lib/python3.8/site-packages:/home/yoonho/ABC2025_main_controller/build/drone_controller:/home/yoonho/ABC2025_main_controller/install/drone_controller/lib/python3.8/site-packages:/home/yoonho/ABC2025_main_controller/install/px4_msgs/lib/python3.8/site-packages:/home/yoonho/ABC2025_main_controller/build/path_generation:/home/yoonho/ABC2025_main_controller/install/path_generation/lib/python3.8/site-packages:/home/yoonho/ABC2025_main_controller/install/my_msgs/lib/python3.8/site-packages:/home/yoonho/ABC2025_main_controller/build/image_detection:/home/yoonho/ABC2025_main_controller/install/image_detection/lib/python3.8/site-packages:/home/yoonho/ABC2025_main_controller/build/depth_detection:/home/yoonho/ABC2025_main_controller/install/depth_detection/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages', 'LC_NUMERIC': 'ja_JP.UTF-8', 'LC_PAPER': 'ja_JP.UTF-8', 'COLCON': '1', 'VTE_VERSION': '6003', 'CMAKE_PREFIX_PATH': '/home/yoonho/ABC2025_main_controller/install/px4_msgs:/home/yoonho/ABC2025_main_controller/install/my_msgs'}, 'shell': False}
+[2.613677] (-) TimerEvent: {}
+[2.714211] (-) TimerEvent: {}
+[2.814607] (-) TimerEvent: {}
+[2.915108] (-) TimerEvent: {}
+[2.957355] (path_generation) StderrLine: {'line': b'/home/yoonho/.local/lib/python3.8/site-packages/setuptools/dist.py:495: SetuptoolsDeprecationWarning: Invalid dash-separated options\n'}
+[2.957818] (path_generation) StderrLine: {'line': b'!!\n'}
+[2.958006] (path_generation) StderrLine: {'line': b'\n'}
+[2.958175] (path_generation) StderrLine: {'line': b'        ********************************************************************************\n'}
+[2.958331] (path_generation) StderrLine: {'line': b"        Usage of dash-separated 'script-dir' will not be supported in future\n"}
+[2.958491] (path_generation) StderrLine: {'line': b"        versions. Please use the underscore name 'script_dir' instead.\n"}
+[2.958648] (path_generation) StderrLine: {'line': b'\n'}
+[2.958801] (path_generation) StderrLine: {'line': b'        By 2025-Mar-03, you need to update your project and remove deprecated calls\n'}
+[2.958954] (path_generation) StderrLine: {'line': b'        or your builds will no longer be supported.\n'}
+[2.959109] (path_generation) StderrLine: {'line': b'\n'}
+[2.959265] (path_generation) StderrLine: {'line': b'        See https://setuptools.pypa.io/en/latest/userguide/declarative_config.html for details.\n'}
+[2.959420] (path_generation) StderrLine: {'line': b'        ********************************************************************************\n'}
+[2.959577] (path_generation) StderrLine: {'line': b'\n'}
+[2.959730] (path_generation) StderrLine: {'line': b'!!\n'}
+[2.959878] (path_generation) StderrLine: {'line': b'  opt = self.warn_dash_deprecation(opt, section)\n'}
+[3.015339] (-) TimerEvent: {}
+[3.020184] (path_generation) StderrLine: {'line': b"/home/yoonho/.local/lib/python3.8/site-packages/setuptools/_distutils/dist.py:261: UserWarning: Unknown distribution option: 'tests_require'\n"}
+[3.020569] (path_generation) StderrLine: {'line': b'  warnings.warn(msg)\n'}
+[3.115462] (-) TimerEvent: {}
+[3.215883] (-) TimerEvent: {}
+[3.316232] (-) TimerEvent: {}
+[3.416653] (-) TimerEvent: {}
+[3.517055] (-) TimerEvent: {}
+[3.547263] (path_generation) StdoutLine: {'line': b'running develop\n'}
+[3.617173] (-) TimerEvent: {}
+[3.717559] (-) TimerEvent: {}
+[3.818069] (-) TimerEvent: {}
+[3.920054] (-) TimerEvent: {}
+[4.020629] (-) TimerEvent: {}
+[4.121093] (-) TimerEvent: {}
+[4.221550] (-) TimerEvent: {}
+[4.256321] (path_generation) StdoutLine: {'line': b'running egg_info\n'}
+[4.316375] (path_generation) StdoutLine: {'line': b'creating path_generation.egg-info\n'}
+[4.316731] (path_generation) StdoutLine: {'line': b'writing path_generation.egg-info/PKG-INFO\n'}
+[4.317594] (path_generation) StdoutLine: {'line': b'writing dependency_links to path_generation.egg-info/dependency_links.txt\n'}
+[4.318160] (path_generation) StdoutLine: {'line': b'writing entry points to path_generation.egg-info/entry_points.txt\n'}
+[4.318510] (path_generation) StdoutLine: {'line': b'writing requirements to path_generation.egg-info/requires.txt\n'}
+[4.318706] (path_generation) StdoutLine: {'line': b'writing top-level names to path_generation.egg-info/top_level.txt\n'}
+[4.321937] (-) TimerEvent: {}
+[4.329129] (path_generation) StdoutLine: {'line': b"writing manifest file 'path_generation.egg-info/SOURCES.txt'\n"}
+[4.422141] (-) TimerEvent: {}
+[4.446813] (path_generation) StdoutLine: {'line': b"reading manifest file 'path_generation.egg-info/SOURCES.txt'\n"}
+[4.448909] (path_generation) StdoutLine: {'line': b"writing manifest file 'path_generation.egg-info/SOURCES.txt'\n"}
+[4.522249] (-) TimerEvent: {}
+[4.622795] (-) TimerEvent: {}
+[4.637375] (path_generation) StdoutLine: {'line': b'running build_ext\n'}
+[4.637698] (path_generation) StdoutLine: {'line': b'Creating /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/python3.8/site-packages/path-generation.egg-link (link to .)\n'}
+[4.639346] (path_generation) StdoutLine: {'line': b'Installing Drone_Commander script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.639740] (path_generation) StdoutLine: {'line': b'Installing astar_fixed_start script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.640069] (path_generation) StdoutLine: {'line': b'Installing astar_fixed_start_edited script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.640412] (path_generation) StdoutLine: {'line': b'Installing astar_fixed_start_simulation script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.640705] (path_generation) StdoutLine: {'line': b'Installing astar_zed_start script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.640985] (path_generation) StdoutLine: {'line': b'Installing dstar_bezier_path_planner script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.641381] (path_generation) StdoutLine: {'line': b'Installing pointcloud script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.641945] (path_generation) StdoutLine: {'line': b'Installing publish_pcd script to /home/yoonho/ABC2025_main_controller/src/install/path_generation/lib/path_generation\n'}
+[4.642734] (path_generation) StdoutLine: {'line': b'\n'}
+[4.643084] (path_generation) StdoutLine: {'line': b'Installed /home/yoonho/ABC2025_main_controller/src/build/path_generation\n'}
+[4.643296] (path_generation) StdoutLine: {'line': b'running symlink_data\n'}
+[4.643563] (path_generation) StdoutLine: {'line': b'creating /home/yoonho/ABC2025_main_controller/src/install/path_generation/share/ament_index/resource_index/packages\n'}
+[4.644120] (path_generation) StdoutLine: {'line': b'symbolically linking /home/yoonho/ABC2025_main_controller/src/build/path_generation/resource/path_generation -> /home/yoonho/ABC2025_main_controller/src/install/path_generation/share/ament_index/resource_index/packages\n'}
+[4.644700] (path_generation) StdoutLine: {'line': b'symbolically linking /home/yoonho/ABC2025_main_controller/src/build/path_generation/package.xml -> /home/yoonho/ABC2025_main_controller/src/install/path_generation/share/path_generation\n'}
+[4.722885] (-) TimerEvent: {}
+[4.738325] (path_generation) CommandEnded: {'returncode': 0}
+[4.776629] (path_generation) JobEnded: {'identifier': 'path_generation', 'rc': 0}
+[4.777708] (-) EventReactorShutdown: {}

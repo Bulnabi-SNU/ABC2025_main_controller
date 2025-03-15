@@ -1,0 +1,930 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "rosidl_generator_py/px4_msgs/px4_msgs_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so"
+		}
+	],
+	"backtrace" : 5,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"include",
+			"ament_execute_extensions",
+			"rosidl_generate_interfaces",
+			"install",
+			"target_link_libraries",
+			"rosidl_target_interfaces",
+			"ament_target_dependencies",
+			"set_target_properties",
+			"find_package",
+			"add_dependencies",
+			"set_properties",
+			"add_definitions",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"/opt/ros/foxy/share/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake",
+			"/opt/ros/foxy/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake",
+			"/opt/ros/foxy/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake",
+			"CMakeLists.txt",
+			"/opt/ros/foxy/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake",
+			"/opt/ros/foxy/share/ament_cmake_target_dependencies/cmake/ament_target_dependencies.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_fastrtps_c/cmake/rosidl_typesupport_fastrtps_c_generate_interfaces.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_fastrtps_cpp/cmake/rosidl_typesupport_fastrtps_cpp_generate_interfaces.cmake",
+			"/opt/ros/foxy/share/builtin_interfaces/cmake/builtin_interfaces__rosidl_typesupport_introspection_cppExport.cmake",
+			"/opt/ros/foxy/share/builtin_interfaces/cmake/ament_cmake_export_targets-extras.cmake",
+			"/opt/ros/foxy/share/builtin_interfaces/cmake/builtin_interfacesConfig.cmake",
+			"/opt/ros/foxy/share/builtin_interfaces/cmake/builtin_interfaces__rosidl_typesupport_introspection_cExport.cmake",
+			"/opt/ros/foxy/share/builtin_interfaces/cmake/builtin_interfaces__rosidl_typesupport_cppExport.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_c/cmake/rosidl_typesupport_cExport.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_c/cmake/ament_cmake_export_targets-extras.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_c/cmake/rosidl_typesupport_cConfig.cmake",
+			"/opt/ros/foxy/share/rosidl_default_runtime/cmake/rosidl_default_runtime-extras.cmake",
+			"/opt/ros/foxy/share/rosidl_default_runtime/cmake/rosidl_default_runtimeConfig.cmake",
+			"/opt/ros/foxy/share/builtin_interfaces/cmake/ament_cmake_export_dependencies-extras.cmake",
+			"/opt/ros/foxy/share/fastrtps/cmake/fastrtps-targets.cmake",
+			"/opt/ros/foxy/share/fastrtps/cmake/fastrtps-config.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_fastrtps_c/cmake/rosidl_typesupport_fastrtps_c-extras.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_fastrtps_c/cmake/rosidl_typesupport_fastrtps_cConfig.cmake",
+			"/opt/ros/foxy/share/rosidl_typesupport_c/cmake/rosidl_typesupport_c-extras.cmake",
+			"/opt/ros/foxy/share/rcutils/cmake/rcutilsExport.cmake",
+			"/opt/ros/foxy/share/rcutils/cmake/ament_cmake_export_targets-extras.cmake",
+			"/opt/ros/foxy/share/rcutils/cmake/rcutilsConfig.cmake",
+			"/opt/ros/foxy/share/rosidl_runtime_c/cmake/ament_cmake_export_dependencies-extras.cmake",
+			"/opt/ros/foxy/share/rosidl_runtime_c/cmake/rosidl_runtime_cConfig.cmake",
+			"/opt/ros/foxy/share/ament_cmake_ros/cmake/ament_cmake_ros-extras.cmake",
+			"/opt/ros/foxy/share/ament_cmake_ros/cmake/ament_cmake_rosConfig.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 3
+			},
+			{
+				"command" : 3,
+				"file" : 3,
+				"line" : 28,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 2,
+				"line" : 286,
+				"parent" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 48,
+				"parent" : 2
+			},
+			{
+				"file" : 0,
+				"parent" : 3
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 235,
+				"parent" : 4
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 292,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 255,
+				"parent" : 4
+			},
+			{
+				"command" : 6,
+				"file" : 0,
+				"line" : 269,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
+				"file" : 4,
+				"line" : 53,
+				"parent" : 8
+			},
+			{
+				"command" : 7,
+				"file" : 0,
+				"line" : 286,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 151,
+				"parent" : 10
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 308,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 176,
+				"parent" : 4
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 48,
+				"parent" : 2
+			},
+			{
+				"file" : 6,
+				"parent" : 14
+			},
+			{
+				"command" : 7,
+				"file" : 6,
+				"line" : 102,
+				"parent" : 15
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 145,
+				"parent" : 16
+			},
+			{
+				"command" : 5,
+				"file" : 6,
+				"line" : 151,
+				"parent" : 15
+			},
+			{
+				"command" : 5,
+				"file" : 6,
+				"line" : 154,
+				"parent" : 15
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 48,
+				"parent" : 2
+			},
+			{
+				"file" : 7,
+				"parent" : 20
+			},
+			{
+				"command" : 5,
+				"file" : 7,
+				"line" : 154,
+				"parent" : 21
+			},
+			{
+				"command" : 7,
+				"file" : 0,
+				"line" : 278,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 145,
+				"parent" : 23
+			},
+			{
+				"command" : 9,
+				"file" : 3,
+				"line" : 12,
+				"parent" : 0
+			},
+			{
+				"file" : 10,
+				"parent" : 25
+			},
+			{
+				"command" : 1,
+				"file" : 10,
+				"line" : 41,
+				"parent" : 26
+			},
+			{
+				"file" : 9,
+				"parent" : 27
+			},
+			{
+				"command" : 1,
+				"file" : 9,
+				"line" : 9,
+				"parent" : 28
+			},
+			{
+				"file" : 8,
+				"parent" : 29
+			},
+			{
+				"command" : 8,
+				"file" : 8,
+				"line" : 56,
+				"parent" : 30
+			},
+			{
+				"command" : 1,
+				"file" : 9,
+				"line" : 9,
+				"parent" : 28
+			},
+			{
+				"file" : 11,
+				"parent" : 32
+			},
+			{
+				"command" : 8,
+				"file" : 11,
+				"line" : 56,
+				"parent" : 33
+			},
+			{
+				"command" : 1,
+				"file" : 9,
+				"line" : 9,
+				"parent" : 28
+			},
+			{
+				"file" : 12,
+				"parent" : 35
+			},
+			{
+				"command" : 8,
+				"file" : 12,
+				"line" : 56,
+				"parent" : 36
+			},
+			{
+				"command" : 7,
+				"file" : 0,
+				"line" : 272,
+				"parent" : 4
+			},
+			{
+				"command" : 5,
+				"file" : 5,
+				"line" : 145,
+				"parent" : 38
+			},
+			{
+				"command" : 1,
+				"file" : 10,
+				"line" : 41,
+				"parent" : 26
+			},
+			{
+				"file" : 18,
+				"parent" : 40
+			},
+			{
+				"command" : 9,
+				"file" : 18,
+				"line" : 21,
+				"parent" : 41
+			},
+			{
+				"file" : 17,
+				"parent" : 42
+			},
+			{
+				"command" : 1,
+				"file" : 17,
+				"line" : 41,
+				"parent" : 43
+			},
+			{
+				"file" : 16,
+				"parent" : 44
+			},
+			{
+				"command" : 9,
+				"file" : 16,
+				"line" : 12,
+				"parent" : 45
+			},
+			{
+				"file" : 15,
+				"parent" : 46
+			},
+			{
+				"command" : 1,
+				"file" : 15,
+				"line" : 41,
+				"parent" : 47
+			},
+			{
+				"file" : 14,
+				"parent" : 48
+			},
+			{
+				"command" : 1,
+				"file" : 14,
+				"line" : 9,
+				"parent" : 49
+			},
+			{
+				"file" : 13,
+				"parent" : 50
+			},
+			{
+				"command" : 8,
+				"file" : 13,
+				"line" : 56,
+				"parent" : 51
+			},
+			{
+				"command" : 5,
+				"file" : 7,
+				"line" : 158,
+				"parent" : 21
+			},
+			{
+				"command" : 1,
+				"file" : 15,
+				"line" : 41,
+				"parent" : 47
+			},
+			{
+				"file" : 23,
+				"parent" : 54
+			},
+			{
+				"command" : 9,
+				"file" : 23,
+				"line" : 13,
+				"parent" : 55
+			},
+			{
+				"file" : 22,
+				"parent" : 56
+			},
+			{
+				"command" : 1,
+				"file" : 22,
+				"line" : 41,
+				"parent" : 57
+			},
+			{
+				"file" : 21,
+				"parent" : 58
+			},
+			{
+				"command" : 9,
+				"file" : 21,
+				"line" : 6,
+				"parent" : 59
+			},
+			{
+				"file" : 20,
+				"parent" : 60
+			},
+			{
+				"command" : 1,
+				"file" : 20,
+				"line" : 54,
+				"parent" : 61
+			},
+			{
+				"file" : 19,
+				"parent" : 62
+			},
+			{
+				"command" : 8,
+				"file" : 19,
+				"line" : 56,
+				"parent" : 63
+			},
+			{
+				"command" : 9,
+				"file" : 18,
+				"line" : 21,
+				"parent" : 41
+			},
+			{
+				"file" : 28,
+				"parent" : 65
+			},
+			{
+				"command" : 1,
+				"file" : 28,
+				"line" : 41,
+				"parent" : 66
+			},
+			{
+				"file" : 27,
+				"parent" : 67
+			},
+			{
+				"command" : 9,
+				"file" : 27,
+				"line" : 21,
+				"parent" : 68
+			},
+			{
+				"file" : 26,
+				"parent" : 69
+			},
+			{
+				"command" : 1,
+				"file" : 26,
+				"line" : 41,
+				"parent" : 70
+			},
+			{
+				"file" : 25,
+				"parent" : 71
+			},
+			{
+				"command" : 1,
+				"file" : 25,
+				"line" : 9,
+				"parent" : 72
+			},
+			{
+				"file" : 24,
+				"parent" : 73
+			},
+			{
+				"command" : 8,
+				"file" : 24,
+				"line" : 56,
+				"parent" : 74
+			},
+			{
+				"command" : 10,
+				"file" : 4,
+				"line" : 50,
+				"parent" : 8
+			},
+			{
+				"command" : 10,
+				"file" : 0,
+				"line" : 283,
+				"parent" : 4
+			},
+			{
+				"command" : 10,
+				"file" : 0,
+				"line" : 238,
+				"parent" : 4
+			},
+			{
+				"command" : 11,
+				"file" : 0,
+				"line" : 248,
+				"parent" : 4
+			},
+			{
+				"command" : 8,
+				"file" : 0,
+				"line" : 158,
+				"parent" : 79
+			},
+			{
+				"command" : 9,
+				"file" : 6,
+				"line" : 15,
+				"parent" : 15
+			},
+			{
+				"file" : 30,
+				"parent" : 81
+			},
+			{
+				"command" : 1,
+				"file" : 30,
+				"line" : 41,
+				"parent" : 82
+			},
+			{
+				"file" : 29,
+				"parent" : 83
+			},
+			{
+				"command" : 12,
+				"file" : 29,
+				"line" : 25,
+				"parent" : 84
+			},
+			{
+				"command" : 13,
+				"file" : 0,
+				"line" : 262,
+				"parent" : 4
+			},
+			{
+				"command" : 13,
+				"file" : 4,
+				"line" : 52,
+				"parent" : 8
+			},
+			{
+				"command" : 13,
+				"file" : 5,
+				"line" : 141,
+				"parent" : 38
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-fPIC"
+				},
+				{
+					"backtrace" : 80,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 80,
+					"fragment" : "-Wextra"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 7,
+					"define" : "FOONATHAN_MEMORY=1"
+				},
+				{
+					"backtrace" : 7,
+					"define" : "FOONATHAN_MEMORY_VERSION_MAJOR=0"
+				},
+				{
+					"backtrace" : 7,
+					"define" : "FOONATHAN_MEMORY_VERSION_MINOR=7"
+				},
+				{
+					"backtrace" : 7,
+					"define" : "FOONATHAN_MEMORY_VERSION_PATCH=1"
+				},
+				{
+					"backtrace" : 7,
+					"define" : "RCUTILS_ENABLE_FAULT_INJECTION"
+				},
+				{
+					"backtrace" : 85,
+					"define" : "ROS_PACKAGE_NAME=\"px4_msgs\""
+				},
+				{
+					"define" : "px4_msgs__rosidl_typesupport_fastrtps_c__pyext_EXPORTS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 86,
+					"path" : "/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_generator_c"
+				},
+				{
+					"backtrace" : 86,
+					"path" : "/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_generator_py"
+				},
+				{
+					"backtrace" : 86,
+					"path" : "/usr/include/python3.8"
+				},
+				{
+					"backtrace" : 87,
+					"path" : "/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_typesupport_c"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_generator_cpp"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_typesupport_fastrtps_c"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_typesupport_fastrtps_cpp"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/opt/ros/foxy/include/builtin_interfaces/msg/dds_fastrtps_c"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/opt/ros/foxy/include/builtin_interfaces/srv/dds_fastrtps_c"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/opt/ros/foxy/include/builtin_interfaces/action/dds_fastrtps_c"
+				},
+				{
+					"backtrace" : 88,
+					"isSystem" : true,
+					"path" : "/opt/ros/foxy/include"
+				},
+				{
+					"backtrace" : 7,
+					"isSystem" : true,
+					"path" : "/opt/ros/foxy/include/foonathan_memory"
+				}
+			],
+			"language" : "C",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 76,
+			"id" : "px4_msgs::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "px4_msgs__rosidl_generator_c::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 77,
+			"id" : "px4_msgs__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "px4_msgs__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 78,
+			"id" : "px4_msgs__rosidl_typesupport_c::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "px4_msgs__python::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 78,
+			"id" : "px4_msgs__py::@2036f14245c7957b8037"
+		}
+	],
+	"id" : "px4_msgs__rosidl_typesupport_fastrtps_c__pyext::@6890427a1f51a3e7e1df",
+	"install" : 
+	{
+		"destinations" : 
+		[
+			{
+				"backtrace" : 6,
+				"path" : "lib/python3.8/site-packages/px4_msgs"
+			},
+			{
+				"backtrace" : 6,
+				"path" : "lib/python3.8/site-packages/px4_msgs"
+			}
+		],
+		"prefix" : 
+		{
+			"path" : "/home/yoonho/ABC2025_main_controller/src/install/px4_msgs"
+		}
+	},
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "-Wl,-rpath,/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_generator_py/px4_msgs:/home/yoonho/ABC2025_main_controller/src/build/px4_msgs:/opt/ros/foxy/lib:/opt/ros/foxy/share/builtin_interfaces/cmake/../../../lib:",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "rosidl_generator_py/px4_msgs/libpx4_msgs__python.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libpython3.8.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 7,
+				"fragment" : "libpx4_msgs__rosidl_typesupport_fastrtps_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 9,
+				"fragment" : "libpx4_msgs__rosidl_typesupport_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 11,
+				"fragment" : "/opt/ros/foxy/lib/librmw.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 11,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_runtime_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 12,
+				"fragment" : "/opt/ros/foxy/share/builtin_interfaces/cmake/../../../lib/libbuiltin_interfaces__python.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 13,
+				"fragment" : "libpx4_msgs__rosidl_generator_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 17,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_typesupport_fastrtps_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 18,
+				"fragment" : "/opt/ros/foxy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 19,
+				"fragment" : "libpx4_msgs__rosidl_typesupport_fastrtps_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 17,
+				"fragment" : "/opt/ros/foxy/lib/librmw.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 17,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_typesupport_fastrtps_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 22,
+				"fragment" : "/opt/ros/foxy/lib/libbuiltin_interfaces__rosidl_typesupport_fastrtps_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 24,
+				"fragment" : "/opt/ros/foxy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 24,
+				"fragment" : "/opt/ros/foxy/lib/libbuiltin_interfaces__rosidl_generator_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 24,
+				"fragment" : "/opt/ros/foxy/lib/libbuiltin_interfaces__rosidl_typesupport_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 24,
+				"fragment" : "/opt/ros/foxy/lib/libbuiltin_interfaces__rosidl_typesupport_introspection_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 31,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_typesupport_introspection_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 34,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_typesupport_introspection_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 24,
+				"fragment" : "/opt/ros/foxy/lib/libbuiltin_interfaces__rosidl_typesupport_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 37,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_typesupport_cpp.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 39,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_typesupport_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 39,
+				"fragment" : "/opt/ros/foxy/lib/librosidl_runtime_c.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 52,
+				"fragment" : "/opt/ros/foxy/lib/librcpputils.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 11,
+				"fragment" : "/opt/ros/foxy/lib/librcutils.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 53,
+				"fragment" : "/opt/ros/foxy/lib/libfastrtps.so.2.1.4",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "/opt/ros/foxy/lib/libfoonathan_memory-0.7.1.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "-lpthread",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libtinyxml2.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "-lpthread",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libtinyxml2.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 75,
+				"fragment" : "-ldl",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libssl.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libcrypto.so",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 64,
+				"fragment" : "-lrt",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 53,
+				"fragment" : "/opt/ros/foxy/lib/libfastcdr.so.1.0.13",
+				"role" : "libraries"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "px4_msgs__rosidl_typesupport_fastrtps_c__pyext",
+	"nameOnDisk" : "px4_msgs_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 5,
+			"compileGroupIndex" : 0,
+			"isGenerated" : true,
+			"path" : "/home/yoonho/ABC2025_main_controller/src/build/px4_msgs/rosidl_generator_py/px4_msgs/_px4_msgs_s.ep.rosidl_typesupport_fastrtps_c.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "SHARED_LIBRARY"
+}

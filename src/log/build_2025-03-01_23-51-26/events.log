@@ -1,0 +1,13 @@
+[0.000000] (-) TimerEvent: {}
+[0.000992] (-) JobUnselected: {'identifier': 'ORB_SLAM3'}
+[0.003831] (-) JobUnselected: {'identifier': 'depth_detection'}
+[0.004217] (-) JobUnselected: {'identifier': 'image_detection'}
+[0.004305] (-) JobUnselected: {'identifier': 'my_msgs'}
+[0.004363] (-) JobUnselected: {'identifier': 'orbslam3_ros2'}
+[0.004415] (-) JobUnselected: {'identifier': 'path_generation'}
+[0.004461] (-) JobUnselected: {'identifier': 'px4_msgs'}
+[0.004506] (-) JobUnselected: {'identifier': 'yolo_detection'}
+[0.004565] (drone_controller) JobQueued: {'identifier': 'drone_controller', 'dependencies': OrderedDict([('my_msgs', '/home/yoonho/ABC2025_main_controller/src/install/my_msgs'), ('px4_msgs', '/home/yoonho/ABC2025_main_controller/src/install/px4_msgs')])}
+[0.004636] (drone_controller) JobStarted: {'identifier': 'drone_controller'}
+[0.026880] (drone_controller) JobEnded: {'identifier': 'drone_controller', 'rc': 1}
+[0.038440] (-) EventReactorShutdown: {}

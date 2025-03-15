@@ -1,0 +1,8 @@
+{
+  "package_name": "my_msgs",
+  "non_idl_tuples": [
+    "/home/yoonho/ABC2025_main_controller/src/my_msgs:msg/YoloDetection.msg",
+    "/home/yoonho/ABC2025_main_controller/src/my_msgs:msg/DepthActivated.msg",
+    "/home/yoonho/ABC2025_main_controller/src/my_msgs:msg/VehicleState.msg"
+  ]
+}
